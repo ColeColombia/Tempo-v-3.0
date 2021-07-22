@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Tempo</title>
+    <link rel="stylesheet" href="app/style/index.css">
+    <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"></script>
+  </head>
+  <body>
+
+    <div id="main">
+      <div id="nav-bar">
+      <button id="view">Courses</button>
+      <button id="milestone">Due tasks</button>
+      </div>
+      <div id="Tempo">
+      <div id="time" ></div>
+      <div id="myDate">
+      </div>
+    </div>
+  </div>
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn">&times;</a>
+  <a href="#" id="add">Add course</a>
+  <a href="#" id="showCourses">Courses</a>
+  <a href="#">Remove course</a>
+</div>
+
+<div id="addcourseMenu" class="addCourseName">
+  <a href="javascript:void(0)" class="closeLayer">&times;</a>
+  <div id="container">
+    <div id="form">
+      <form id="fill-form" action="add.html" method="post">
+
+  <input id="field" type="text" name="courseName" placeholder="Enter course name">
+  <button id="submit" type="button" name="button">Add</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="courseList" class="theCourseList">
+  <a href="javascript:void(0)" class="closeCourseList">&times;</a>
+  <div class="listCourses">
+    <h1>Courses</h1>
+    <div id="course_menu" class="course-menu">
+      <form class="course_form">
+        <select class="course_select">
+        </select>
+        <input class="chosen_course" type="button" name="" value="select">
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="course_details" class="course-details">
+  <a href="javascript:void(0)" class="close_details">&times;</a>
+  <div class="course_info">
+    <h1 class="setCourseName">Course name</h1>
+    <div id="course_content" class="course-content">
+    </div>
+  </div>
+</div>
+  </body>
+<script src="app/javascript/index.js"></script>
+</html>
