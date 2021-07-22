@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>set reminder</title>
+    <link rel="stylesheet" href="../style/reminder.css">
+    <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="">
+      <h3>Set Reminder</h3>
+      <div class="form_container">
+        <form class="">
+          <input type="text" class="course_name" placeholder="task name">
+          <input type="date" class="date_picker">
+          <div class="time">
+            <input type="number" class="hours" min="0" max="23" placeholder="hour">
+            <input type="number" class="minutes" min="0" max="59" placeholder="min">
+            <input type="number" class="seconds" min="0" max="59" placeholder="sec">
+          </div>
+          <input type="button" class="setReminderButton" value="set reminder">
+        </form>
+      </div>
+      <div class="valid"></div>
+    </div>
+  </body>
+  <script type="text/javascript" src="../javascript/reminder.js"></script>
+</html>

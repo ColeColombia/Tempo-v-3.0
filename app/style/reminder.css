@@ -1,0 +1,64 @@
+body{
+  margin: 0 auto;
+  background-color: #111;
+  color: silver;
+}
+
+.course_name, .date_picker{
+  display: block;
+  margin: 1%;
+  border: none;
+  border-radius: 2px;
+  font-size: 11pt;
+}
+
+.course_name{
+  height: 25px;
+  width: 96%;
+  color: white;
+  background-color: #18191A;
+}
+
+.date_picker{
+  width: 96.8%;
+  height: 25px;
+  background-color: #18191A;
+  color: silver;
+}
+
+.time{
+  margin-left: 1%;
+  text-align: center;
+}
+
+.time input{
+  display: inline-block;
+  width: 30.8%;
+  border: none;
+  border-radius: 2px;
+  height: 22px;
+  font-size: 11pt;
+  background-color: #18191A;
+  color: white;
+}
+
+.time, .setReminderButton{
+  margin: 1.5%;
+  display: block;
+}
+
+.setReminderButton{
+  border: none;
+  border-radius: 2px;
+  width: 97.4%;
+  height: 28px;
+  font-size: 11pt;
+  cursor: pointer;
+  background-color: #4ADEDE;
+  color: #FFFEF7;
+}
+
+.form_container form{
+  margin: auto;
+  width: 75%;
+}
