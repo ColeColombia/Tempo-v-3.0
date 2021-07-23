@@ -50,15 +50,65 @@ function namesOfCourses(){
 window.api.send("toMain", "some data")
 }
 
+let option;
+
 $(".chosen_course").click(()=>{
- let option = $(".course_select").val()
+ option = $(".course_select").val()
  $(".course-details").css("width", "100%")
  $("#main").css("margin-left", "250px")
  $(".setCourseName").html(`${option}`)
+
+ window.loadReminders.getReminders("courseReminders", (task, date)=>{
+   if(task === "1785cfc3bc6ac7738e8b38cdccd1af12563c2b9070e07af336a1bf8c0f772b6a"){
+    $(".course-content").html(`No tasks set yet for ${option}`)
+    return;
+   }
+
+   let setDate = new Date(`${date}`)
+   let countDown = setDate.getTime()
+   let current = new Date().getTime()
+   let distance = countDown - current
+
+   let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+   let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+   let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+   let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+   let timeRemain = `${days} days : ${hours} hrs : ${minutes} min : ${seconds} sec`
+
+if(distance < 0)
+{
+  timeRemain = `task overdue`
+  $(".course-content").append(`<div class="wrap_reminder data-id="${task}">
+  <div class="task_name" data-id="${task}">${task}</div>
+  <div class="task_date" data-id="${date}">${setDate.toDateString()}</div>
+  <div class="course_overdue">${timeRemain}</div></div>`)
+}
+else{
+  $(".course-content").append(`<div id="wrap" class="wrap_reminder" data-id="${task}">
+  <div class="task_name" data-id="${task}">${task}</div>
+  <div class="task_date" data-id="${date}">${setDate.toDateString()}</div>
+  <div class="count_down">${timeRemain}</div>
+  <input type="checkbox" class="delete_task" id="deleteTask" value="${task}">
+  </div>`)
+}
+
+ })
+ window.loadReminders.checkReminders("checkReminder", option)
+
 })
 
 $(".close_details").click(()=>{
   $("#course_details").css("width", "0")
+  $(".course-content").html("")
+  window.loadReminders.remove("courseReminders")
+})
+
+$(".set_reminder").click(()=>{
+  window.reminder.openReminder("openReminder", option);
+})
+
+$(".delete_reminder").click(()=>{
+  window.reminder.removeReminder("deleteReminder")
 })
 
 })

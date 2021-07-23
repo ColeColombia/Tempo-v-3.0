@@ -4,12 +4,14 @@
     <meta charset="utf-8">
     <title>Tempo</title>
     <link rel="stylesheet" href="app/style/index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Roboto:wght@100&display=swap"
+     rel="stylesheet">
     <script
     src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
     crossorigin="anonymous"></script>
   </head>
-  <body>
+  <body style="font-family: 'Roboto', sans-serif;">
 
     <div id="main">
       <div id="nav-bar">
@@ -60,9 +62,25 @@
 <div id="course_details" class="course-details">
   <a href="javascript:void(0)" class="close_details">&times;</a>
   <div class="course_info">
-    <h1 class="setCourseName">Course name</h1>
-    <div class="setRemButton"><button class="setReminder"></button></div>
+    <div class="course_header">
+      <h1 class="setCourseName">Course name</h1>
+        <div class="setButton"><button class="set_reminder">
+          <img src="app/images/event_white_24dp.svg">set reminder</button></div>
+        <div class="deleteButton"><button class="delete_reminder">
+        <img src="app/images/delete_forever_white_24dp.svg">delete reminder</button></div>
+    </div>
+    <div class="course_tasks">
+      <div class="task_head">
+        <h3>tasks</h3>
+      </div>
+      <div class="heading_wraper">
+      <div class="task-name">Task name</div>
+      <div class="task-date">Due date</div>
+      <div class="time-remaining">Time remaining</div>
+      <div class="delete_bin"><img src="app/images/delete_forever_white_24dp.svg"></div>
+    </div>
     <div id="course_content" class="course-content">
+    </div>
     </div>
   </div>
 </div>

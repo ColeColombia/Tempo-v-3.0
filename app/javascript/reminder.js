@@ -45,7 +45,7 @@ function validate(task, date, hours, minutes, seconds){
     $(".date_picker").css("border", "1px solid #76BA1B")
   }
 
-  if(hours.length === 0){
+  if(hours.length == 0){
     $(".valid").css("color", "#B32134")
     $(".valid").html("enter full time")
     $(".hours").css("border",   "0.1px solid #AC1F43")
@@ -55,7 +55,7 @@ function validate(task, date, hours, minutes, seconds){
     $(".hours").css("border", "0.1px solid #76BA1B")
   }
 
-  if(minutes.length === 0){
+  if(minutes.length == 0){
     $(".valid").css("color", "#B32134")
     $(".valid").html("enter full time")
     $(".minutes").css("border", "0.1px solid #AC1F43")
@@ -64,7 +64,7 @@ function validate(task, date, hours, minutes, seconds){
     $(".minutes").css("border", "0.1px solid #76BA1B")
   }
 
-  if(seconds.length === 0){
+  if(seconds.length == 0){
     $(".valid").css("color", "#B32134")
     $(".valid").html("enter full time")
     $(".seconds").css("border", "0.1px solid #AC1F43")

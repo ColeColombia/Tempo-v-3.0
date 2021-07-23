@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain, dialog } = require('electron')
 const path = require('path')
 const { resolve } = require('bluebird')
 const sqlite3 = require('sqlite3')
@@ -7,21 +7,19 @@ let mainWindow;
 
 async function createWindow() {
 
-  // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800,
     height: 580,
     webPreferences: {
-    nodeIntegration: false, // is default value after Electron v5
-    contextIsolation: true, // protect against prototype pollution
-    enableRemoteModule: false, // turn off remote
-    preload: path.join(__dirname, "preload.js") // use a preload script
+    nodeIntegration: false,
+    contextIsolation: true,
+    enableRemoteModule: false,
+    preload: path.join(__dirname, "preload.js")
     }
   });
 
   mainWindow.setResizable(false)
   mainWindow.loadFile(path.join(__dirname, "index.html"))
-  // rest of code..
 }
 
 app.on("ready", createWindow);
@@ -94,6 +92,32 @@ class ProjectRepository {
     return this.dao.run(sql)
   }
 
+  createTableTasks(){
+    const sql = `
+    CREATE TABLE IF NOT EXISTS tasks (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT,
+      task TEXT,
+      date TEXT,
+      FOREIGN KEY(name) REFERENCES courses(name))`
+    return this.dao.run(sql)
+  }
+
+  insertTask(name, task, date){
+    const sql = `
+    INSERT INTO tasks (name, task, date) VALUES (?,?,?)`
+    return this.dao.run(sql, [name, task, date])
+  }
+
+  dropTable(){
+    const sql = `DROP TABLE tasks`
+    return this.dao.run(sql)
+  }
+
+  checkTask(name){
+    const sql = `SELECT * FROM tasks WHERE name = ?`
+    return this.dao.all(sql, [name])
+  }
 
   insert(name) {
       return this.dao.run(
@@ -106,13 +130,16 @@ class ProjectRepository {
          }
 }
 
-
 const crud = new AppDAO('./courses.sqlite3')
 const query = new ProjectRepository(crud)
 
 query.createTableCourses().then(()=>{
-  console.log("Table created");
+  console.log("courses table created");
 });
+
+query.createTableTasks().then(()=>{
+  console.log("task table created")
+})
 
 ipcMain.handle("addcourses", async (event, course)=>{
   function confirmMessage(course){
@@ -124,7 +151,9 @@ ipcMain.handle("addcourses", async (event, course)=>{
 
   return confirmation;
   }
-  result = await confirmMessage(course)
+
+await confirmMessage(course)
+
 })
 
 ipcMain.on("toMain", (event, data)=>{
@@ -134,4 +163,82 @@ ipcMain.on("toMain", (event, data)=>{
     });
     console.log(rows)
   });
+})
+
+let course;
+
+ipcMain.on("openReminder", (event, arg) => {
+  let child = new BrowserWindow({ parent: mainWindow,
+    modal: true,
+    show: false,
+    width: 500,
+    height: 300,
+    icon: '',
+    webPreferences: {
+    nodeIntegration: false,
+    contextIsolation: true,
+    enableRemoteModule: false,
+    preload: path.join(__dirname, "preload.js")
+  }
+  })
+
+  child.loadFile(path.join(__dirname, "app/html/set_reminder.html"))
+  //child.setMenu(null)
+  child.setResizable(false)
+  child.once('ready-to-show', () => {
+    child.show()
+  })
+  course = arg;
+})
+
+ipcMain.on("sentCourse", (event, args)=>{
+  event.reply("chosenCourse", course)
+})
+
+ipcMain.on("data", (event, name, task, date)=>{
+  query.insertTask(name, task, date).then(()=>{
+    event.reply("task_added", "task added")
+    console.log("Reminder added")
+    console.log(`${name}  ${task}  ${date}`)
+  })
+})
+
+ipcMain.on("checkReminder", (event, arg)=>{
+ query.checkTask(arg).then((rows)=>{
+   if(rows.length == 0){
+     mainWindow.webContents.send("courseReminders", "1785cfc3bc6ac7738e8b38cdccd1af12563c2b9070e07af336a1bf8c0f772b6a", "nothing");
+   }
+
+   else if(rows.length > 0){
+     rows.forEach((item) => {
+       mainWindow.webContents.send("courseReminders", item.task, item.date);
+       console.log(rows)
+     });
+   }
+
+ })
+})
+
+ipcMain.on("deleteReminder", ()=>{
+  let child2 = new BrowserWindow({ parent: mainWindow,
+    modal: true,
+    show: false,
+    width: 500,
+    height: 300,
+    icon: '',
+    webPreferences: {
+    nodeIntegration: false,
+    contextIsolation: true,
+    enableRemoteModule: false,
+    preload: path.join(__dirname, "preload.js")
+  }
+  })
+
+  child2.loadFile(path.join(__dirname, "app/html/delete_reminder.html"))
+  //child.setMenu(null)
+  child2.setResizable(false)
+  child2.once('ready-to-show', () => {
+    child2.show()
+  })
+
 })

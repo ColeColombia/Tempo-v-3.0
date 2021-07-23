@@ -236,3 +236,124 @@ Edit later
   text-decoration: none;
   color: #818181;
 }
+
+.setButton, .deleteButton{
+display: block;
+margin: 0.5%;
+}
+
+.set_reminder{
+  margin-left: 78.5%;
+  width: 20%;
+  height: 30px;
+  font-size: 11pt;
+  cursor: pointer;
+  background-color: #4ADEDE;
+  border: none;
+  border-radius: 2px;
+  color: #FFFEF7;
+}
+
+.set_reminder:hover{
+  background-color: #03FDFC;
+}
+
+.set_reminder:active{
+  background-color: #58CCED;
+}
+
+.delete_reminder{
+  margin-left: 78.5%;
+  width: 20%;
+  height: 30px;
+  font-size: 11pt;
+  cursor: pointer;
+  background-color: #AC1F43;
+  border: none;
+  border-radius: 2px;
+  color: #FFFEF7;
+}
+
+.delete_reminder:hover{
+  background-color: #B32134;
+}
+
+.course_tasks{
+  margin-top: 2%;
+}
+
+.heading_wraper{
+  width: 99%;
+  margin:0 auto;
+}
+
+.task-name, .task-date, .time-remaining, .delete_bin{
+  display: inline-block;
+  height: 30px;
+  text-align: center;
+  padding-top: 8px;
+  cursor: pointer;
+  border: none;
+  border-radius: 2px;
+  color: #FFFEF7;
+  font-size: 12.5pt;
+  margin: 0.3%;
+  color: silver;
+}
+
+.delete_bin{
+  margin-left: 1%;
+}
+
+.task-name, .task-date, .time-remaining{
+  width: 30%;
+}
+
+.course-content{
+  width: 99%;
+  margin:0 auto;
+}
+
+.wrap_reminder div{
+  display: inline-block;
+  margin:0.3%;
+}
+
+.task_name, .task_date, .count_down{
+  height: 30px;
+  text-align: center;
+  padding-top: 8px;
+  cursor: pointer;
+  background-color: #0ABAB5;
+  border: none;
+  border-radius: 2px;
+  color: #FFFEF7;
+  font-size: 12.5pt;
+  width: 30%;
+}
+
+.delete_task{
+  margin-left: 1.8%;
+  border: none;
+}
+
+.course_overdue{
+  height: 30px;
+  text-align: center;
+  padding-top: 8px;
+  cursor: pointer;
+  background-color: #AC1F43;
+  border: none;
+  border-radius: 2px;
+  color: #FFFEF7;
+  font-size: 12.5pt;
+  width: 32%;
+}
+
+.setCourseName, .task_head{
+  margin-left: 2%;
+}
+
+.course_header img{
+  float: left;
+}
