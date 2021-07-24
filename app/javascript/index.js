@@ -37,60 +37,85 @@ $("#showCourses").click(()=>{
   namesOfCourses()
 })
 
+function namesOfCourses(){
+  window.api.receive("fromMain", (id, data) => {
+    $(".course_select").append(`<option value="${data}">${data}</option>`)
+})
+ window.api.send("toMain", "some data")
+}
+
 $(".closeCourseList").click(()=>{
   $("#courseList").css("width", "0")
   $(".course_select").html("")
   window.api.remove("fromMain")
 })
 
-function namesOfCourses(){
-  window.api.receive("fromMain", (id, data) => {
-    $(".course_select").append(`<option value="${data}">${data}</option>`)
-})
-window.api.send("toMain", "some data")
+function calcDistance(date){
+
+  let setDate = new Date(`${date}`)
+  let countDown = setDate.getTime()
+  let current = new Date().getTime()
+  let distance = countDown - current
+
+  return distance
+}
+
+function calcTimeRem(distance){
+
+  let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  let timeRemain = `${days} days : ${hours} hrs : ${minutes} min : ${seconds} sec`
+
+  return timeRemain
+}
+
+function showCourseReminders(distance, timeRemain, task, date){
+
+  let setDate = new Date(`${date}`)
+
+  if(distance < 0)
+  {
+    timeRemain = `task overdue`
+    $(".course-content").append(`<div class="wrap_reminder data-id="${task}">
+    <div class="task_name" data-id="${task}">${task}</div>
+    <div class="task_date" data-id="${date}">${setDate.toDateString()}</div>
+    <div class="course_overdue">${timeRemain}</div></div>`)
+  }
+
+  else
+  {
+    $(".course-content").append(`<div id="wrap" class="wrap_reminder" data-id="${task}">
+    <div class="task_name" data-id="${task}">${task}</div>
+    <div class="task_date" data-id="${date}">${setDate.toDateString()}</div>
+    <div class="count_down">${timeRemain}</div>
+    </div>`)
+  }
+
 }
 
 let option;
 
 $(".chosen_course").click(()=>{
+
  option = $(".course_select").val()
  $(".course-details").css("width", "100%")
  $("#main").css("margin-left", "250px")
  $(".setCourseName").html(`${option}`)
 
  window.loadReminders.getReminders("courseReminders", (task, date)=>{
+
    if(task === "1785cfc3bc6ac7738e8b38cdccd1af12563c2b9070e07af336a1bf8c0f772b6a"){
-    $(".course-content").html(`No tasks set yet for ${option}`)
-    return;
+   $(".course-content").html(`<div class="no-task">No tasks set yet for ${option}</div>`)
+   return;
    }
 
-   let setDate = new Date(`${date}`)
-   let countDown = setDate.getTime()
-   let current = new Date().getTime()
-   let distance = countDown - current
-
-   let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-   let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-   let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-   let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-   let timeRemain = `${days} days : ${hours} hrs : ${minutes} min : ${seconds} sec`
-
-if(distance < 0)
-{
-  timeRemain = `task overdue`
-  $(".course-content").append(`<div class="wrap_reminder data-id="${task}">
-  <div class="task_name" data-id="${task}">${task}</div>
-  <div class="task_date" data-id="${date}">${setDate.toDateString()}</div>
-  <div class="course_overdue">${timeRemain}</div></div>`)
-}
-else{
-  $(".course-content").append(`<div id="wrap" class="wrap_reminder" data-id="${task}">
-  <div class="task_name" data-id="${task}">${task}</div>
-  <div class="task_date" data-id="${date}">${setDate.toDateString()}</div>
-  <div class="count_down">${timeRemain}</div>
-  <input type="checkbox" class="delete_task" id="deleteTask" value="${task}">
-  </div>`)
-}
+   else{
+   let distance   = calcDistance(date)
+   let timeRemain = calcTimeRem(distance)
+   showCourseReminders(distance, timeRemain, task, date)
+  }
 
  })
  window.loadReminders.checkReminders("checkReminder", option)

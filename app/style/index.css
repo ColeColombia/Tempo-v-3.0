@@ -287,9 +287,10 @@ margin: 0.5%;
   margin:0 auto;
 }
 
-.task-name, .task-date, .time-remaining, .delete_bin{
+.task-name, .task-date, .time-remaining{
   display: inline-block;
   height: 30px;
+  width: 32%;
   text-align: center;
   padding-top: 8px;
   cursor: pointer;
@@ -299,14 +300,6 @@ margin: 0.5%;
   font-size: 12.5pt;
   margin: 0.3%;
   color: silver;
-}
-
-.delete_bin{
-  margin-left: 1%;
-}
-
-.task-name, .task-date, .time-remaining{
-  width: 30%;
 }
 
 .course-content{
@@ -329,12 +322,7 @@ margin: 0.5%;
   border-radius: 2px;
   color: #FFFEF7;
   font-size: 12.5pt;
-  width: 30%;
-}
-
-.delete_task{
-  margin-left: 1.8%;
-  border: none;
+  width: 32%;
 }
 
 .course_overdue{
@@ -350,7 +338,7 @@ margin: 0.5%;
   width: 32%;
 }
 
-.setCourseName, .task_head{
+.setCourseName, .task_head, .no-task{
   margin-left: 2%;
 }
 
