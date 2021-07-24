@@ -186,7 +186,21 @@ Edit later
 
 .course_select{
   margin: 1%;
-  height: 11vh;
+  height: 8vh;
+  text-align: center;
+  padding-top: 4px;
+  background-color: #18191A;
+  display: block;
+  text-decoration: none;
+  width: 98%;
+  border: none;
+  font-size: 10pt;
+  color: silver;
+}
+
+.chosen_course{
+  margin: 1%;
+  height: 8vh;
   text-align: center;
   padding-top: 4px;
   background-color: #18191A;
@@ -195,20 +209,6 @@ Edit later
   width: 98%;
   border: none;
   font-size: 12pt;
-  color: silver;
-}
-
-.chosen_course{
-  margin: 1%;
-  height: 11vh;
-  text-align: center;
-  padding-top: 4px;
-  background-color: #18191A;
-  display: block;
-  text-decoration: none;
-  width: 98%;
-  border: none;
-  font-size: 14pt;
   color: silver;
   cursor: pointer;
 }

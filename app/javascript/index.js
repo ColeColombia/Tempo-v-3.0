@@ -9,7 +9,7 @@ $(document).ready(function(){
 }, 1000)
 
 $("#view").click(()=>{
-  $("#mySidenav").css("width", "250px")
+  $("#mySidenav").css("width", "268px")
   $("#main").css("margin-left", "250px")
 })
 
@@ -32,21 +32,31 @@ $("#submit").click(()=>{
   window.addToCourses.addCourse("addcourses", courseName)
 })
 
+function validateEmptyCourse(data){
+  if(data === "1785cfc3bc6ac7738e8b38cdccd1af12563c2b9070e07af336a1bf8c0f772b6a"){
+    $(".courseExist").append("<p>No courses found, go back and,<br> add a course</p>")
+    $(".chosen_course").prop("disabled", true)
+  }
+  else{
+    $(".course_select").append(`<option value="${data}">${data}</option>`)
+    $(".chosen_course").prop("disabled", false)
+  }
+}
+
 $("#showCourses").click(()=>{
-  $("#courseList").css("width", "50%")
-  namesOfCourses()
+  $("#courseList").css("width", "268px")
+  window.requestCourses.receive("receiveCourses", (data) => {
+  validateEmptyCourse(data)
 })
 
-function namesOfCourses(){
-  window.requestCourses.receive("receiveCourses", (data) => {
-    $(".course_select").append(`<option value="${data}">${data}</option>`)
-})
  window.requestCourses.send("loadCourses")
-}
+
+})
 
 $(".closeCourseList").click(()=>{
   $("#courseList").css("width", "0")
   $(".course_select").html("")
+  $(".courseExist").html("")
   window.requestCourses.remove("receiveCourses")
 })
 

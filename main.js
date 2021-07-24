@@ -24,13 +24,18 @@ async function createWindow() {
 
 app.on("ready", createWindow);
 
-class AppDAO {
+class AppDAO
+{
 
-    constructor(dbFilePath) {
-      this.db = new sqlite3.Database(dbFilePath, (err) => {
-        if (err) {
+    constructor(dbFilePath)
+    {
+      this.db = new sqlite3.Database(dbFilePath, (err) =>
+      {
+        if (err)
+        {
           console.log('Could not connect to database', err)
-        } else {
+        } else
+        {
           console.log('Connected to database')
         }
       })
@@ -110,7 +115,7 @@ class ProjectRepository {
   }
 
   dropTable(){
-    const sql = `DROP TABLE courses`
+    const sql = `DROP TABLE tasks`
     return this.dao.run(sql)
   }
 
@@ -133,10 +138,9 @@ class ProjectRepository {
 const crud = new AppDAO('./courses.sqlite3')
 const query = new ProjectRepository(crud)
 
-/*query.dropTable().then(()=>{
+query.dropTable().then(()=>{
   console.log("courses table deleted")
 })
-*/
 
 query.createTableCourses().then(()=>{
   console.log("courses table created");
@@ -157,17 +161,35 @@ ipcMain.handle("addcourses", async (event, course)=>{
   return confirmation;
   }
 
-await confirmMessage(course)
-
+let result = await confirmMessage(course)
+return result
 })
 
 ipcMain.on("loadCourses", (event, data)=>{
   query.getAll().then((rows)=>{
-    rows.forEach((item) => {
-      mainWindow.webContents.send("receiveCourses", item.name);
-    });
-    console.log(rows)
+    if(rows.length == 0)
+    {
+      console.log("no data")
+      mainWindow.webContents.send("receiveCourses",
+      "1785cfc3bc6ac7738e8b38cdccd1af12563c2b9070e07af336a1bf8c0f772b6a");
+    }
+    else if(rows.length > 0){
+      rows.forEach((item) => {
+        mainWindow.webContents.send("receiveCourses", item.name);
+      })
+      console.log(rows)
+    }
+
+  })
+})
+
+let courses = []
+
+ipcMain.on("sendCourseArray", (event, data) =>{
+  courses.forEach((item) => {
+    event.reply("receiveCourseArray", item.task)
   });
+console.log(courses)
 })
 
 let course;
@@ -200,12 +222,19 @@ ipcMain.on("sentCourse", (event, args)=>{
   event.reply("chosenCourse", course)
 })
 
-ipcMain.on("data", (event, name, task, date)=>{
-  query.insertTask(name, task, date).then(()=>{
-    event.reply("success", "Reminder added successfully")
-    console.log("Reminder added")
-    console.log(`${name}  ${task}  ${date}`)
-  })
+ipcMain.handle("data", async (event, name, task, date)=>{
+  function insert(name, task, date){
+    let insertQuery = query.insertTask(name, task, date).then(()=>{
+      //event.reply("success", "Reminder added successfully")
+      console.log("Reminder added")
+      console.log(`${name}  ${task}  ${date}`)
+    })
+
+    return insertQuery
+  }
+  const result = await insert(name, task, date)
+
+  return result
 })
 
 ipcMain.on("checkReminder", (event, arg)=>{
@@ -216,6 +245,7 @@ ipcMain.on("checkReminder", (event, arg)=>{
 
    else if(rows.length > 0){
      rows.forEach((item) => {
+       courses.push(item)
        mainWindow.webContents.send("courseReminders", item.task, item.date);
        console.log(rows)
      });

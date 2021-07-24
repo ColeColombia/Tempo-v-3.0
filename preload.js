@@ -3,10 +3,11 @@ const {contextBridge, ipcRenderer} = require("electron");
 contextBridge.exposeInMainWorld(
   'addToCourses',
   {
-    addCourse: (channel, data) =>{
+    addCourse: async (channel, data) =>{
       let validChannel = ["addcourses"]
       if(validChannel.includes(channel)){
-      ipcRenderer.invoke(channel, data)}
+      const result = await ipcRenderer.invoke(channel, data)
+     }
     }
   }
 )
@@ -71,20 +72,13 @@ contextBridge.exposeInMainWorld(
 contextBridge.exposeInMainWorld(
   "insertData",
   {
-    insert:(channel, ...data) => {
+    insert: async (channel, ...data) => {
         let validChannel = ["data"];
         if (validChannel.includes(channel)) {
-            ipcRenderer.send(channel, ...data);
-        }
-    },
-    confirm:(channel, func) => {
-        let validChannel = ["success"];
-        if (validChannel.includes(channel)) {
-            ipcRenderer.on(channel, (event, args) => func(args));
+        const result = await ipcRenderer.invoke(channel, ...data)
         }
     }
-  }
-)
+})
 
 contextBridge.exposeInMainWorld(
   "loadReminders",
