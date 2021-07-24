@@ -38,16 +38,16 @@ $("#showCourses").click(()=>{
 })
 
 function namesOfCourses(){
-  window.api.receive("fromMain", (id, data) => {
+  window.requestCourses.receive("receiveCourses", (data) => {
     $(".course_select").append(`<option value="${data}">${data}</option>`)
 })
- window.api.send("toMain", "some data")
+ window.requestCourses.send("loadCourses")
 }
 
 $(".closeCourseList").click(()=>{
   $("#courseList").css("width", "0")
   $(".course_select").html("")
-  window.api.remove("fromMain")
+  window.requestCourses.remove("receiveCourses")
 })
 
 function calcDistance(date){

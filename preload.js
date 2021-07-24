@@ -3,27 +3,34 @@ const {contextBridge, ipcRenderer} = require("electron");
 contextBridge.exposeInMainWorld(
   'addToCourses',
   {
-    addCourse: (channel, data) => ipcRenderer.invoke(channel, data)
+    addCourse: (channel, data) =>{
+      let validChannel = ["addcourses"]
+      if(validChannel.includes(channel)){
+      ipcRenderer.invoke(channel, data)}
+    }
   }
 )
 
 contextBridge.exposeInMainWorld(
-    "api", {
-        send: (channel, data) => {
+    "requestCourses", {
+      send: (channel) => {
 
-            let validChannels = ["toMain"];
-            if (validChannels.includes(channel)) {
-                ipcRenderer.send(channel, data);
+            let validChannel = ["loadCourses"];
+            if (validChannel.includes(channel)) {
+                ipcRenderer.send(channel);
             }
         },
         receive: (channel, func) => {
-            let validChannels = ["fromMain"];
-            if (validChannels.includes(channel)) {
+            let validChannel = ["receiveCourses"];
+            if (validChannel.includes(channel)) {
                 ipcRenderer.on(channel, (event, ...args) => func(...args));
             }
         },
         remove: (channel)=>{
+          let validChannel = ["receiveCourses"]
+          if(validChannel.includes(channel)){
           ipcRenderer.removeAllListeners(channel)
+         }
         }
     }
 );
@@ -68,6 +75,12 @@ contextBridge.exposeInMainWorld(
         let validChannel = ["data"];
         if (validChannel.includes(channel)) {
             ipcRenderer.send(channel, ...data);
+        }
+    },
+    confirm:(channel, func) => {
+        let validChannel = ["success"];
+        if (validChannel.includes(channel)) {
+            ipcRenderer.on(channel, (event, args) => func(args));
         }
     }
   }

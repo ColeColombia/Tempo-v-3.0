@@ -110,7 +110,7 @@ class ProjectRepository {
   }
 
   dropTable(){
-    const sql = `DROP TABLE tasks`
+    const sql = `DROP TABLE courses`
     return this.dao.run(sql)
   }
 
@@ -133,6 +133,11 @@ class ProjectRepository {
 const crud = new AppDAO('./courses.sqlite3')
 const query = new ProjectRepository(crud)
 
+/*query.dropTable().then(()=>{
+  console.log("courses table deleted")
+})
+*/
+
 query.createTableCourses().then(()=>{
   console.log("courses table created");
 });
@@ -144,7 +149,7 @@ query.createTableTasks().then(()=>{
 ipcMain.handle("addcourses", async (event, course)=>{
   function confirmMessage(course){
     let confirmation = query.insert(course).then(()=>{
-    console.log("course added");
+    console.log("course added " + course);
   }).catch((result)=>{
     console.log(result)
   })
@@ -156,10 +161,10 @@ await confirmMessage(course)
 
 })
 
-ipcMain.on("toMain", (event, data)=>{
+ipcMain.on("loadCourses", (event, data)=>{
   query.getAll().then((rows)=>{
     rows.forEach((item) => {
-      mainWindow.webContents.send("fromMain", item.id, item.name);
+      mainWindow.webContents.send("receiveCourses", item.name);
     });
     console.log(rows)
   });
@@ -197,7 +202,7 @@ ipcMain.on("sentCourse", (event, args)=>{
 
 ipcMain.on("data", (event, name, task, date)=>{
   query.insertTask(name, task, date).then(()=>{
-    event.reply("task_added", "task added")
+    event.reply("success", "Reminder added successfully")
     console.log("Reminder added")
     console.log(`${name}  ${task}  ${date}`)
   })

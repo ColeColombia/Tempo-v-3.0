@@ -73,16 +73,19 @@ $(".setReminderButton").click(()=>{
   let valid = validate(task, date, hours, minutes, seconds)
 
   if(valid){
+
     let dateString = `${date} ${hours}:${minutes}:${seconds}`
     window.courseName.receiveCourseName("chosenCourse", (name) => {
     window.insertData.insert("data", name, task, dateString)
+    })
+
+    window.insertData.confirm("success", (data)=>{
     $(".valid").css("color", "#76BA1B")
-    $(".valid").html("task added")
-  })
-}
+    $(".valid").html(`${data}`)
+    })
+   }
 
-window.courseName.sendCourse("sentCourse")
-
+   window.courseName.sendCourse("sentCourse")
 })
 
 })
