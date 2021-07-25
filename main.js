@@ -19,6 +19,7 @@ async function createWindow() {
   });
 
   mainWindow.setResizable(false)
+  mainWindow.setOpacity(0.9)
   mainWindow.loadFile(path.join(__dirname, "index.html"))
 }
 
@@ -132,9 +133,14 @@ class ProjectRepository {
         [name])
          }
 
-         getAll() {
-           return this.dao.all(`SELECT * FROM courses`)
-         }
+  checkCourse(course){
+    const sql = `SELECT * FROM courses WHERE name = ?`
+    return this.dao.all(sql, [course])
+  }
+
+  getAll() {
+    return this.dao.all(`SELECT * FROM courses`)
+  }
 }
 
 const crud = new AppDAO('./courses.sqlite3')
@@ -152,18 +158,49 @@ query.createTableTasks().then(()=>{
   console.log("task table created")
 })
 
-ipcMain.handle("addcourses", async (event, course)=>{
-  function confirmMessage(course){
-    let confirmation = query.insert(course).then(()=>{
-    console.log("course added " + course);
-  }).catch((result)=>{
-    console.log(result)
+ipcMain.on("openAddcourseMenu", (event, data)=>{
+  let addCourseWindow = new BrowserWindow({ parent: mainWindow,
+    modal: true,
+    show: false,
+    //frame: false, 
+    width: 500,
+    height: 400,
+    icon: '',
+    webPreferences: {
+    nodeIntegration: false,
+    contextIsolation: true,
+    enableRemoteModule: false,
+    preload: path.join(__dirname, "preload.js")
+  }
   })
 
-  return confirmation;
-  }
+  addCourseWindow.loadFile(path.join(__dirname, "app/html/add_course.html"))
+  addCourseWindow.setMenu(null)
+  addCourseWindow.removeMenu()
+  addCourseWindow.setOpacity(0.9)
+  addCourseWindow.setHasShadow(false)
+  addCourseWindow.setResizable(false)
+  addCourseWindow.once('ready-to-show', () => {
+  addCourseWindow.show()
+  })
+})
 
-await confirmMessage(course)
+ipcMain.on("addcourses", (event, course)=>{
+
+    query.checkCourse(course).then((rows)=>{
+      if(rows.length == 0){
+        query.insert(course).then(()=>{
+        console.log("course added " + course);
+      }).catch((result)=>{
+        console.log(result)
+      })
+        event.reply("added", `${course} added successfully`, "#76BA1B")
+      }
+      else if(rows.length > 0){
+        event.reply("added", `${course} already exists`, "#B32134")
+        return
+      }
+    })
 
 })
 
@@ -203,7 +240,8 @@ ipcMain.on("openReminder", (event, arg) => {
   })
 
   child.loadFile(path.join(__dirname, "app/html/set_reminder.html"))
-  //child.setMenu(null)
+  child.setMenu(null)
+  child.setHasShadow(false)
   child.setResizable(false)
   child.once('ready-to-show', () => {
     child.show()
@@ -265,7 +303,7 @@ ipcMain.on("deleteReminder", ()=>{
   })
 
   child2.loadFile(path.join(__dirname, "app/html/delete_reminder.html"))
-  //child.setMenu(null)
+  child.setMenuBarVisibilty(false)
   child2.setResizable(false)
   child2.once('ready-to-show', () => {
     child2.show()
