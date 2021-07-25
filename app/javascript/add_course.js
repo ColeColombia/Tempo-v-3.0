@@ -10,14 +10,14 @@ function validate(courseName){
     return false
   }
 
-  else if(/[^a-z]/i.test(courseName)){
+  else if(!/^[a-zA-Z\s]*$/.test(courseName)){
     $(".valid").html(`<p class="verify">name must contain only letters</p>`)
     $(".valid").css("color", "#B32134")
     return false
   }
 
-  else if(courseName.length > 18){
-    $(".valid").html(`<p class="verify">Enter a maximum of 18 characters</p>`)
+  else if(courseName.length > 45){
+    $(".valid").html(`<p class="verify">Enter a maximum of 45 characters</p>`)
     $(".valid").css("color", "#B32134")
     return false
   }
@@ -38,10 +38,28 @@ function validate(courseName){
 
   $(".submit").click((e)=>{
     let courseName = $(".field").val()
-    validate(courseName)
-    return false;
-    //console.log();
-    //window.add.addCourse("addcourses", courseName)
+
+    if(validate(courseName)){
+      window.add.addCourse("addcourses", courseName)
+      window.add.feedback("added", (data, color)=>{
+        if(color === "#76BA1B"){
+          $(".modal").css("display", "block")
+          $(".details").html(`<p class="response">${data}</p>`)
+          $(".details").css("color", `${color}`)
+        }
+
+        else if(color === "#B32134"){
+          $(".modal").css("display", "block")
+          $(".details").html(`<p class="response">${data}</p>`)
+          $(".details").css("color",`${color}`)
+        }
+      })
+    }
+  })
+
+  $(".close").click(()=>{
+    $(".modal").css("display", "none")
+    location.reload();
   })
 
 })

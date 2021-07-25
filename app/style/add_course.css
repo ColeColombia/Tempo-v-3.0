@@ -1,0 +1,107 @@
+body{
+  margin: 0 auto;
+  background-color: #111;
+  color: silver;
+}
+
+.addCourseName{
+  text-align: center;
+}
+
+.container{
+  width: 100%;
+}
+
+.form{
+  margin: auto;
+  width: 80%;
+  padding: 10px;
+  margin-top: 10%;
+}
+
+.field, .submit{
+  padding: 10px;
+  border: none;
+  background-color: #E4E6EB;
+  color: #18191A;
+  font-family: sans-serif;
+  font-size: 12pt;
+  margin: 1.4%;
+}
+
+.field{
+  width: 75%;
+  height: 20px;
+  border: 1px solid silver;
+  color: white;
+  background-color: #18191A;
+  border-radius: 1px;
+  font-size: 12pt;
+}
+
+.submit{
+  width: 80%;
+  height: 40px;
+  cursor: pointer;
+  border-radius: 2px;
+  cursor: pointer;
+  background-color: #4ADEDE;
+  color: #FFFEF7;
+}
+
+.submit:hover{
+  background-color: #03FDFC;
+}
+
+.submit:active{
+  background-color: #58CCED;
+}
+
+.valid{
+  text-align: center;
+}
+
+.verify{
+  font-weight: bold;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  margin-left: 12%;
+  margin-top: 12%;
+  width: 75%;
+  height: 65%;
+  overflow: hidden;
+  background-color: #171717;
+}
+
+.close, .content{
+  display: inline-block;
+}
+
+.close{
+  font-size: 30pt;
+  float: right;
+  margin-right: 3%;
+}
+
+.close:hover{
+  cursor: pointer;
+  color: white;
+}
+
+.content{
+  overflow:hidden;
+  margin-top: 2%;
+  text-align: center;
+  width: 100%;
+}
+
+.response{
+  margin-left: 2%;
+  font-weight: bold;
+}
