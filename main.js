@@ -24,18 +24,13 @@ async function createWindow() {
 
 app.on("ready", createWindow);
 
-class AppDAO
-{
+class AppDAO {
 
-    constructor(dbFilePath)
-    {
-      this.db = new sqlite3.Database(dbFilePath, (err) =>
-      {
-        if (err)
-        {
+    constructor(dbFilePath) {
+      this.db = new sqlite3.Database(dbFilePath, (err) => {
+        if (err) {
           console.log('Could not connect to database', err)
-        } else
-        {
+        } else {
           console.log('Connected to database')
         }
       })
@@ -108,6 +103,13 @@ class ProjectRepository {
     return this.dao.run(sql)
   }
 
+  verifyTask(name, task){
+    const sql = `
+    SELECT * FROM tasks WHERE name = ? AND task = ?
+    `
+    return this.dao.all(sql, [name, task])
+  }
+
   insertTask(name, task, date){
     const sql = `
     INSERT INTO tasks (name, task, date) VALUES (?,?,?)`
@@ -161,8 +163,8 @@ ipcMain.handle("addcourses", async (event, course)=>{
   return confirmation;
   }
 
-let result = await confirmMessage(course)
-return result
+await confirmMessage(course)
+
 })
 
 ipcMain.on("loadCourses", (event, data)=>{
@@ -181,15 +183,6 @@ ipcMain.on("loadCourses", (event, data)=>{
     }
 
   })
-})
-
-let courses = []
-
-ipcMain.on("sendCourseArray", (event, data) =>{
-  courses.forEach((item) => {
-    event.reply("receiveCourseArray", item.task)
-  });
-console.log(courses)
 })
 
 let course;
@@ -222,19 +215,21 @@ ipcMain.on("sentCourse", (event, args)=>{
   event.reply("chosenCourse", course)
 })
 
-ipcMain.handle("data", async (event, name, task, date)=>{
-  function insert(name, task, date){
-    let insertQuery = query.insertTask(name, task, date).then(()=>{
-      //event.reply("success", "Reminder added successfully")
-      console.log("Reminder added")
-      console.log(`${name}  ${task}  ${date}`)
-    })
+ipcMain.on("data", (event, name, task, date)=>{
 
-    return insertQuery
+  query.verifyTask(name, task).then((rows)=>{
+  if(rows.length == 0){
+    query.insertTask(name, task, date).then(()=>{
+    event.reply("success", "Reminder added successfully")
+    console.log("Reminder added")
+    console.log(`${name}  ${task}  ${date}`)
+  })
   }
-  const result = await insert(name, task, date)
+  else if(rows.length > 0){
+    console.log("it exits")
+  }
+  })
 
-  return result
 })
 
 ipcMain.on("checkReminder", (event, arg)=>{
@@ -245,7 +240,6 @@ ipcMain.on("checkReminder", (event, arg)=>{
 
    else if(rows.length > 0){
      rows.forEach((item) => {
-       courses.push(item)
        mainWindow.webContents.send("courseReminders", item.task, item.date);
        console.log(rows)
      });
