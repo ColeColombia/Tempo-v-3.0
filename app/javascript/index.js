@@ -133,7 +133,7 @@ $(".set_reminder").click(()=>{
 })
 
 $(".delete_reminder").click(()=>{
-  window.reminder.removeReminder("deleteReminder")
+
 })
 
 })

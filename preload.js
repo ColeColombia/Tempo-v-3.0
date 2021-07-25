@@ -56,13 +56,7 @@ contextBridge.exposeInMainWorld(
       if(validChannel.includes(channel)){
       ipcRenderer.send(channel, data)
     }
-  },
-  removeReminder:(channel)=>{
-    let validChannel = ["deleteReminder"]
-    if(validChannel.includes(channel)){
-    ipcRenderer.send(channel)
   }
-}
 })
 
 contextBridge.exposeInMainWorld(

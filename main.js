@@ -288,27 +288,3 @@ ipcMain.on("checkReminder", (event, arg)=>{
 
  })
 })
-
-ipcMain.on("deleteReminder", ()=>{
-  let child2 = new BrowserWindow({ parent: mainWindow,
-    modal: true,
-    show: false,
-    width: 500,
-    height: 300,
-    icon: '',
-    webPreferences: {
-    nodeIntegration: false,
-    contextIsolation: true,
-    enableRemoteModule: false,
-    preload: path.join(__dirname, "preload.js")
-  }
-  })
-
-  child2.loadFile(path.join(__dirname, "app/html/delete_reminder.html"))
-  child.setMenuBarVisibilty(false)
-  child2.setResizable(false)
-  child2.once('ready-to-show', () => {
-    child2.show()
-  })
-
-})
