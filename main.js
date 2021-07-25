@@ -162,7 +162,7 @@ ipcMain.on("openAddcourseMenu", (event, data)=>{
   let addCourseWindow = new BrowserWindow({ parent: mainWindow,
     modal: true,
     show: false,
-    //frame: false, 
+    //frame: false,
     width: 500,
     height: 400,
     icon: '',
@@ -232,6 +232,7 @@ ipcMain.on("openReminder", (event, arg) => {
     height: 300,
     icon: '',
     webPreferences: {
+    devTools: false,
     nodeIntegration: false,
     contextIsolation: true,
     enableRemoteModule: false,
@@ -241,6 +242,7 @@ ipcMain.on("openReminder", (event, arg) => {
 
   child.loadFile(path.join(__dirname, "app/html/set_reminder.html"))
   child.setMenu(null)
+  child.setOpacity(0.9)
   child.setHasShadow(false)
   child.setResizable(false)
   child.once('ready-to-show', () => {
