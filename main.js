@@ -9,7 +9,7 @@ async function createWindow() {
 
   mainWindow = new BrowserWindow({
     width: 800,
-    height: 580,
+    height: 565,
     webPreferences: {
     nodeIntegration: false,
     contextIsolation: true,
@@ -220,12 +220,13 @@ ipcMain.on("data", (event, name, task, date)=>{
   query.verifyTask(name, task).then((rows)=>{
   if(rows.length == 0){
     query.insertTask(name, task, date).then(()=>{
-    event.reply("success", "Reminder added successfully")
+    event.reply("success", "Reminder added successfully", "#76BA1B")
     console.log("Reminder added")
     console.log(`${name}  ${task}  ${date}`)
   })
   }
   else if(rows.length > 0){
+    event.reply("success", `${task} already exsts in<br> ${name}`, "#B32134")
     console.log("it exits")
   }
   })

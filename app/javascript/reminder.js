@@ -75,12 +75,32 @@ $(".setReminderButton").click(()=>{
   if(valid){
     let dateString = `${date} ${hours}:${minutes}:${seconds}`
     window.courseName.receiveCourseName("chosenCourse", (name) => {
+      //create method for checking if data exists
     window.insertData.insert("data", name, task, dateString)
+    window.insertData.status("success", (data, color)=>{
+      if(color === "#76BA1B"){
+        $(".modal").css("display", "block")
+        $(".details").html(`<p class="response">${data}</p>`)
+        $(".details").css("color", `${color}`)
+      }
+      else if(color === "#B32134"){
+        $(".modal").css("display", "block")
+        $(".details").html(`<p class="response">${data}</p>`)
+        $(".details").css("color",`${color}`)
+      }
+
+    })
     })
 
    }
 
    window.courseName.sendCourse("sentCourse")
+
+})
+
+$(".close").click(()=>{
+  $(".modal").css("display", "none")
+  location.reload();
 })
 
 })

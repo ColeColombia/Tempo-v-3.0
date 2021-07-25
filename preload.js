@@ -72,10 +72,16 @@ contextBridge.exposeInMainWorld(
 contextBridge.exposeInMainWorld(
   "insertData",
   {
-    insert: async (channel, ...data) => {
+    insert: (channel, ...data) => {
         let validChannel = ["data"];
         if (validChannel.includes(channel)) {
-        const result = await ipcRenderer.invoke(channel, ...data)
+        ipcRenderer.send(channel, ...data)
+        }
+    },
+    status: (channel, func) => {
+        let validChannel = ["success"];
+        if (validChannel.includes(channel)) {
+            ipcRenderer.on(channel, (event, ...status) => func(...status));
         }
     }
 })

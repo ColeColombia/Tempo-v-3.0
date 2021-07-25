@@ -4,6 +4,10 @@ body{
   color: silver;
 }
 
+.form_header{
+  text-align: center;
+}
+
 .course_name, .date_picker{
   display: block;
   margin: 1%;
@@ -61,4 +65,43 @@ body{
 .form_container form{
   margin: auto;
   width: 75%;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  margin-left: 12%;
+  margin-top: 12%;
+  width: 75%;
+  height: 65%;
+  overflow: hidden;
+  background-color: #171717;
+}
+
+.close, .content{
+  display: inline-block;
+}
+
+.close{
+  font-size: 30pt;
+  float: right;
+  margin-right: 3%;
+}
+
+.close:hover{
+  cursor: pointer;
+  color: white;
+}
+
+.content{
+  overflow:hidden;
+  margin-top: 10%;
+}
+
+.response{
+  margin-left: 2%;
+  font-weight: bold;
 }
