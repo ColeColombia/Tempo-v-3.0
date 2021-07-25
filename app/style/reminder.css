@@ -17,7 +17,7 @@ body{
 }
 
 .course_name{
-  height: 25px;
+  height: 30px;
   width: 96%;
   color: white;
   background-color: #18191A;
@@ -25,7 +25,7 @@ body{
 
 .date_picker{
   width: 96.8%;
-  height: 25px;
+  height: 30px;
   background-color: #18191A;
   color: silver;
 }
@@ -40,7 +40,7 @@ body{
   width: 30.8%;
   border: none;
   border-radius: 2px;
-  height: 22px;
+  height: 33px;
   font-size: 11pt;
   background-color: #18191A;
   color: white;
@@ -55,14 +55,14 @@ body{
   border: none;
   border-radius: 2px;
   width: 97.4%;
-  height: 28px;
+  height: 32px;
   font-size: 11pt;
   cursor: pointer;
   background-color: #4ADEDE;
   color: #FFFEF7;
 }
 
-.form_container form{
+.form_container{
   margin: auto;
   width: 75%;
 }
@@ -98,10 +98,17 @@ body{
 
 .content{
   overflow:hidden;
-  margin-top: 10%;
+  margin-top: 2%;
+  text-align: center;
+  width: 100%;
 }
 
 .response{
   margin-left: 2%;
+  font-weight: bold;
+}
+
+.valid{
+  text-align: center;
   font-weight: bold;
 }

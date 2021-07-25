@@ -54,7 +54,7 @@ $(document).ready(function(){
 
     if(difference < 0 ){
       $(".valid").css("color", "#B32134")
-      $(".valid").html("chosen date is behind")
+      $(".valid").html("chosen date and time are behind")
       $(".date_picker").css("border", "1px solid #AC1F43")
       return false;
     }else {

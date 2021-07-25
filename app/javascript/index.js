@@ -18,18 +18,8 @@ $(".closebtn").click(()=>{
   $("#main").css("margin-left", "0")
 })
 
-$("#add").click(()=>{
-  $("#addcourseMenu").css("width", "100%")
-  $("#main").css("margin-left", "250px")
-})
-
-$(".closeLayer").click(()=>{
-  $("#addcourseMenu").css("width", "0")
-})
-
-$("#submit").click(()=>{
-  let courseName = $("#field").val()
-  window.addToCourses.addCourse("addcourses", courseName)
+$(".addcourse").click(()=>{
+  window.add.open("openAddcourseMenu")
 })
 
 function validateEmptyCourse(data){
