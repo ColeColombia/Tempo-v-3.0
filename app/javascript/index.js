@@ -101,10 +101,10 @@ let option;
 
 $(".chosen_course").click(()=>{
 
- option = $(".course_select").val()
- $(".course-details").css("width", "100%")
- $("#main").css("margin-left", "250px")
- $(".setCourseName").html(`${option}`)
+  option = $(".course_select").val()
+  $(".course-details").css("width", "100%")
+  $("#main").css("margin-left", "250px")
+  $(".setCourseName").html(`${option}`)
 
  window.loadReminders.getReminders("courseReminders", (task, date)=>{
 
@@ -114,9 +114,11 @@ $(".chosen_course").click(()=>{
    }
 
    else{
+
    let distance   = calcDistance(date)
    let timeRemain = calcTimeRem(distance)
    showCourseReminders(distance, timeRemain, task, date)
+
   }
 
  })
@@ -136,7 +138,25 @@ $(".set_reminder").click(()=>{
 })
 
 $(".delete_reminder").click(()=>{
+  let selectedCourse = $(".select_remove").val()
+  window.removeReminder.send("remove_reminder", option, selectedCourse)
+  window.removeReminder.receive("removed", (confirm)=>{
+    $(".modal").css("display", "block")
+    $(".details").html(`<p class="response">${confirm}</p>`)
+  })
+})
 
+$(".close").click(()=>{
+  let selectedCourse = $(".select_remove").val()
+  if(selectedCourse === null){
+  $(".delete_reminder").prop("disabled", true)
+  }else{
+   $(".delete_reminder").prop("disabled", false)
+  }
+
+  $(".modal").css("display", "none")
+  $(".details").html(``)
+  window.removeReminder.removeListener("removed")
 })
 
 })
