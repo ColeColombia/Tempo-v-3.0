@@ -113,3 +113,24 @@ contextBridge.exposeInMainWorld(
     }
   }
 )
+
+contextBridge.exposeInMainWorld(
+  "removeReminder",
+  {
+    send:(channel, ...data) => {
+        let validChannel = ["remove_reminder"];
+        if (validChannel.includes(channel)) {
+            ipcRenderer.send(channel, ...data);
+        }
+    },
+    receive:(channel, func) => {
+        let validChannel = ["removed"];
+        if (validChannel.includes(channel)) {
+            ipcRenderer.on(channel, (event, ...args) => func(...args));
+        }
+    },
+    removeListener: (channel)=>{
+        ipcRenderer.removeAllListeners("removed")
+      }
+  }
+)
