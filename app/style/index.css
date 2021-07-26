@@ -292,3 +292,47 @@ text-align: center;
   font-size: 12.5pt;
   width: 32%;
 }
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  margin-left: 35%;
+  margin-top: 20%;
+  width: 30%;
+  height: 30%;
+  overflow: hidden;
+  background-color: #171717;
+  transition: 0.5s;
+}
+
+.close, .content{
+  display: inline-block;
+}
+
+.close{
+  font-size: 30pt;
+  float: right;
+  margin-right: 3%;
+  color: silver;
+}
+
+.close:hover{
+  cursor: pointer;
+  color: white;
+}
+
+.content{
+  overflow:hidden;
+  margin-top: 2%;
+  text-align: center;
+  width: 100%;
+  color: #76BA1B;
+}
+
+.response{
+  margin-left: 2%;
+  font-weight: bold;
+}
