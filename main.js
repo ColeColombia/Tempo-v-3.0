@@ -14,7 +14,7 @@ async function createWindow() {
     nodeIntegration: false,
     contextIsolation: true,
     enableRemoteModule: false,
-    preload: path.join(__dirname, "preload.js")
+    preload: path.join(__dirname, "private/preload.js")
     }
   });
 
@@ -104,6 +104,11 @@ class ProjectRepository {
     return this.dao.run(sql)
   }
 
+  deleteCourse(name){
+    const sql = `DELETE FROM courses WHERE name = ?`
+    return this.dao.run(sql, [name])
+  }
+
   verifyTask(name, task){
     const sql = `
     SELECT * FROM tasks WHERE name = ? AND task = ?
@@ -117,8 +122,18 @@ class ProjectRepository {
     return this.dao.run(sql, [name, task, date])
   }
 
-  dropTable(){
+  deleteTask(name, task){
+    const sql = `DELETE FROM tasks WHERE name = ? AND task = ?`
+    return this.dao.run(sql, [name, task])
+  }
+
+  dropTableTask(){
     const sql = `DROP TABLE tasks`
+    return this.dao.run(sql)
+  }
+
+  dropTableCourses(){
+    const sql = `DROP TABLE courses`
     return this.dao.run(sql)
   }
 
@@ -127,7 +142,7 @@ class ProjectRepository {
     return this.dao.all(sql, [name])
   }
 
-  insert(name) {
+  insertCourse(name) {
       return this.dao.run(
         'INSERT INTO courses (name) VALUES (?)',
         [name])
@@ -138,16 +153,26 @@ class ProjectRepository {
     return this.dao.all(sql, [course])
   }
 
-  getAll() {
+  getAllTasks(){
+   return this.dao.all(`SELECT * FROM tasks`)
+  }
+
+  getAllCourses() {
     return this.dao.all(`SELECT * FROM courses`)
   }
 }
 
-const crud = new AppDAO('./courses.sqlite3')
+let database =  path.join(__dirname, "private/courses.sqlite3")
+const crud = new AppDAO(database)
 const query = new ProjectRepository(crud)
 
-query.dropTable().then(()=>{
-  console.log("courses table deleted")
+
+query.dropTableCourses().then(()=>{
+  console.log("course table deleted");
+})
+
+query.dropTableTask().then(()=>{
+  console.log("task table deleted");
 })
 
 query.createTableCourses().then(()=>{
@@ -170,7 +195,7 @@ ipcMain.on("openAddcourseMenu", (event, data)=>{
     nodeIntegration: false,
     contextIsolation: true,
     enableRemoteModule: false,
-    preload: path.join(__dirname, "preload.js")
+    preload: path.join(__dirname, "private/preload.js")
   }
   })
 
@@ -189,7 +214,7 @@ ipcMain.on("addcourses", (event, course)=>{
 
     query.checkCourse(course).then((rows)=>{
       if(rows.length == 0){
-        query.insert(course).then(()=>{
+        query.insertCourse(course).then(()=>{
         console.log("course added " + course);
       }).catch((result)=>{
         console.log(result)
@@ -205,7 +230,7 @@ ipcMain.on("addcourses", (event, course)=>{
 })
 
 ipcMain.on("loadCourses", (event, data)=>{
-  query.getAll().then((rows)=>{
+  query.getAllCourses().then((rows)=>{
     if(rows.length == 0)
     {
       console.log("no data")
@@ -236,7 +261,7 @@ ipcMain.on("openReminder", (event, arg) => {
     nodeIntegration: false,
     contextIsolation: true,
     enableRemoteModule: false,
-    preload: path.join(__dirname, "preload.js")
+    preload: path.join(__dirname, "private/preload.js")
   }
   })
 
@@ -287,4 +312,11 @@ ipcMain.on("checkReminder", (event, arg)=>{
    }
 
  })
+})
+
+ipcMain.on("remove_reminder", (event, name, task)=>{
+  query.deleteTask(name, task).then(()=>{
+    event.reply("removed", `${task} successfully removed from ${name}`)
+    console.log(`${task} successfully removed from ${name}`)
+  })
 })
