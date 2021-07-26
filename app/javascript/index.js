@@ -78,6 +78,7 @@ function showCourseReminders(distance, timeRemain, task, date){
   if(distance < 0)
   {
     timeRemain = `task overdue`
+    $(".select_remove").append(`<option>${task}</option>`)
     $(".course-content").append(`<div class="wrap_reminder data-id="${task}">
     <div class="task_name" data-id="${task}">${task}</div>
     <div class="task_date" data-id="${date}">${setDate.toDateString()}</div>
@@ -86,6 +87,7 @@ function showCourseReminders(distance, timeRemain, task, date){
 
   else
   {
+    $(".select_remove").append(`<option>${task}</option>`)
     $(".course-content").append(`<div id="wrap" class="wrap_reminder" data-id="${task}">
     <div class="task_name" data-id="${task}">${task}</div>
     <div class="task_date" data-id="${date}">${setDate.toDateString()}</div>
@@ -123,6 +125,7 @@ $(".chosen_course").click(()=>{
 })
 
 $(".close_details").click(()=>{
+  $(".select_remove").html("")
   $("#course_details").css("width", "0")
   $(".course-content").html("")
   window.loadReminders.remove("courseReminders")

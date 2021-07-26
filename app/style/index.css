@@ -84,23 +84,22 @@ text-align: center;
   margin-left: 50px;
 }
 
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {
   transition: margin-left .5s;
   padding: 20px;
 }
 
 .theCourseList{
-  height: 100%; /* 100% Full-height */
-  width: 0; /* 0 width - change this with JavaScript */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
   left: 0;
-  background-color: #111; /* Black*/
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 60px; /* Place content 60px from the top */
-  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 60px;
+  transition: 0.5s;
   color: silver;
 }
 
@@ -167,13 +166,27 @@ text-align: center;
   color: #818181;
 }
 
-.setButton, .deleteButton{
-display: block;
-margin: 0.5%;
+.setCourseName, .task_head, .no-task{
+  margin-left: 2%;
+}
+
+.reminderButtons{
+  margin-left: 2%;
+}
+
+.reminderButtons img{
+  float: left;
+}
+
+.setButton, .remove_course, .deleteButton {
+ display: inline;
+}
+
+.remove_course{
+  margin-left: 38%;
 }
 
 .set_reminder{
-  margin-left: 78.5%;
   width: 20%;
   height: 30px;
   font-size: 11pt;
@@ -182,6 +195,7 @@ margin: 0.5%;
   border: none;
   border-radius: 2px;
   color: #FFFEF7;
+  padding-top:7px;
 }
 
 .set_reminder:hover{
@@ -193,7 +207,6 @@ margin: 0.5%;
 }
 
 .delete_reminder{
-  margin-left: 78.5%;
   width: 20%;
   height: 30px;
   font-size: 11pt;
@@ -202,14 +215,26 @@ margin: 0.5%;
   border: none;
   border-radius: 2px;
   color: #FFFEF7;
+  padding-top:7px;
 }
 
 .delete_reminder:hover{
   background-color: #B32134;
 }
 
+.select_remove{
+  width: 20%;
+  height: 30px;
+  font-size: 11pt;
+  cursor: pointer;
+  background-color:#4ADEDE;
+  border: none;
+  border-radius: 2px;
+  color: #FFFEF7;
+}
+
 .course_tasks{
-  margin-top: 2%;
+  margin-top: 0.5%;
 }
 
 .heading_wraper{
@@ -266,12 +291,4 @@ margin: 0.5%;
   color: #FFFEF7;
   font-size: 12.5pt;
   width: 32%;
-}
-
-.setCourseName, .task_head, .no-task{
-  margin-left: 2%;
-}
-
-.course_header img{
-  float: left;
 }
