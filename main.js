@@ -315,8 +315,15 @@ ipcMain.on("checkReminder", (event, arg)=>{
 })
 
 ipcMain.on("remove_reminder", (event, name, task)=>{
-  query.deleteTask(name, task).then(()=>{
+
+  if(task == null){
+    return
+  }
+  else{
+    query.deleteTask(name, task).then(()=>{
     event.reply("removed", `${task} successfully removed from ${name}`)
     console.log(`${task} successfully removed from ${name}`)
   })
+}
+
 })
