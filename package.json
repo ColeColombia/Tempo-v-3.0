@@ -12,7 +12,7 @@
   "author": "Kholani Benelzane",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^13.1.7",
-    "database_query": "1.0.0"
+    "database_query": "file:database_query",
+    "electron": "^13.1.7"
   }
 }

@@ -21,6 +21,7 @@ body{
   width: 100%;
   height: 30%;
   text-align: center;
+  margin-top: 222px;
 }
 
 #view, #milestone
@@ -125,7 +126,7 @@ text-align: center;
 
 .course_select{
   margin: 1%;
-  height: 8vh;
+  height: 10vh;
   text-align: center;
   padding-top: 4px;
   background-color: #18191A;
@@ -139,7 +140,7 @@ text-align: center;
 
 .chosen_course{
   margin: 1%;
-  height: 8vh;
+  height: 10vh;
   text-align: center;
   padding-top: 4px;
   background-color: #18191A;

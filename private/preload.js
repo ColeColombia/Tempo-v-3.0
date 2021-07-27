@@ -143,6 +143,12 @@ contextBridge.exposeInMainWorld(
         if (validChannel.includes(channel)) {
             ipcRenderer.send(channel)
         }
+    },
+    minimizeWin:(channel) => {
+        let validChannel = ["minimize"]
+        if (validChannel.includes(channel)) {
+            ipcRenderer.send(channel)
+        }
     }
   })
 

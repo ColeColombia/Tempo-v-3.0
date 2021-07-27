@@ -193,4 +193,5 @@ $(".removed_Course").click(()=>{
   window.deleteCourse.send("deleteCourse", course)
 })
 
+
 })
