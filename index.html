@@ -12,14 +12,13 @@
     crossorigin="anonymous"></script>
   </head>
   <body style="font-family: 'Roboto', sans-serif;">
-
     <div id="main">
       <div id="nav-bar">
-      <button id="view">Courses</button>
+      <button id="view">Menu</button>
       <button id="milestone">Due tasks</button>
       </div>
       <div id="Tempo">
-      <div id="time" ></div>
+      <div id="time"></div>
       <div id="myDate">
       </div>
     </div>
@@ -29,7 +28,8 @@
   <a href="javascript:void(0)" class="closebtn">&times;</a>
   <a href="#" class="addcourse">Add course</a>
   <a href="#" id="showCourses">Courses</a>
-  <a href="#">Remove course</a>
+  <a href="#" class="close-RemoveCourse">Remove course</a>
+  <a href="#" class="exitParent">Exit</a>
 </div>
 
 <div id="courseList" class="theCourseList">
@@ -80,6 +80,15 @@
       <div class="details">
       </div>
   </div>
+</div>
+
+<div class="removecourse">
+  <a href="javascript:void(0)" class="close_course">&times;</a>
+   <div class="rem_course">
+     <select class="selected_Course">
+     </select>
+     <button class="removed_Course">Remove course</button>
+   </div>
 </div>
 <script src="app/javascript/index.js"></script>
 </html>

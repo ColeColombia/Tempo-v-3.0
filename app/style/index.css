@@ -5,6 +5,17 @@ body{
   background-repeat: no-repeat;
 }
 
+.closeParent{
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 45px;
+  float: right;
+  text-decoration: none;
+  color: black;
+  font-weight: bolder;
+}
+
 #nav-bar
 {
   width: 100%;
@@ -85,8 +96,7 @@ text-align: center;
 }
 
 #main {
-  transition: margin-left .5s;
-  padding: 20px;
+  transition: margin-left .7s;
 }
 
 .theCourseList{
@@ -152,7 +162,7 @@ text-align: center;
   background-color: #111;
   overflow-x: hidden;
   padding-top: 60px;
-  transition: 0.5s;
+  transition: 0.8s;
   color:silver;
 }
 
@@ -335,4 +345,61 @@ text-align: center;
 .response{
   margin-left: 2%;
   font-weight: bold;
+}
+
+.removecourse{
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 60px;
+  transition: 0.5s;
+}
+
+.close_course{
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36pt;
+  margin-left: 50px;
+  text-decoration: none;
+  color: silver
+}
+
+.close_course:hover{
+  color: white;
+}
+
+.selected_Course{
+  width: 100%;
+  height: 45px;
+  font-size: 11pt;
+  cursor: pointer;
+  background-color:#18191A;
+  border: none;
+  color: #FFFEF7;
+  border: none;
+}
+
+.removed_Course{
+  width: 100%;
+  height: 45px;
+  font-size: 11pt;
+  cursor: pointer;
+  background-color:#18191A;
+  border: none;
+  color: #FFFEF7;
+  font-size: 12pt;
+}
+
+.rem_course{
+  margin-top: 15%;
+}
+
+.removed_Course{
+  margin-top: 2%;
 }

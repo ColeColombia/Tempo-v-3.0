@@ -12,10 +12,7 @@
   "author": "Kholani Benelzane",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^13.1.7"
-  },
-  "dependencies": {
-    "bluebird": "^3.7.2",
-    "sqlite3": "^5.0.2"
+    "electron": "^13.1.7",
+    "database_query": "1.0.0"
   }
 }

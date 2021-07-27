@@ -9,7 +9,7 @@ $(document).ready(function(){
 }, 1000)
 
 $("#view").click(()=>{
-  $("#mySidenav").css("width", "268px")
+  $("#mySidenav").css("width", "248px")
   $("#main").css("margin-left", "250px")
 })
 
@@ -34,7 +34,7 @@ function validateEmptyCourse(data){
 }
 
 $("#showCourses").click(()=>{
-  $("#courseList").css("width", "268px")
+  $("#courseList").css("width", "248px")
   window.requestCourses.receive("receiveCourses", (data) => {
   validateEmptyCourse(data)
 })
@@ -157,6 +157,40 @@ $(".close").click(()=>{
   $(".modal").css("display", "none")
   $(".details").html(``)
   window.removeReminder.removeListener("removed")
+})
+
+$(".exitParent").click(()=>{
+  window.closeParent.send("close")
+})
+
+$(".close-RemoveCourse").click(()=>{
+  $(".removecourse").css("width", "248px")
+  $("#main").css("margin-left", "250px")
+  window.requestCourses.receive("receiveCourses", (data) => {
+    if(data === "1785cfc3bc6ac7738e8b38cdccd1af12563c2b9070e07af336a1bf8c0f772b6a")
+    {
+      $(".removed_Course").prop("disabled", true)
+      $(".selected_Course").html("")
+    }
+    else
+    {
+      $(".selected_Course").append(`<option value="${data}">${data}</option>`)
+      $(".removed_Course").prop("disabled", false)
+    }
+  })
+  window.requestCourses.send("loadCourses")
+})
+
+$(".close_course").click(()=>{
+  $(".removecourse").css("width", "0")
+  $("#main").css("margin-left", "245px")
+  window.requestCourses.remove("receiveCourses")
+  $(".selected_Course").html("")
+})
+
+$(".removed_Course").click(()=>{
+  let course = $(".selected_Course").val()
+  window.deleteCourse.send("deleteCourse", course)
 })
 
 })

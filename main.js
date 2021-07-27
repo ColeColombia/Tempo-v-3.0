@@ -1,22 +1,22 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron')
 const path = require('path')
-const { resolve } = require('bluebird')
-const sqlite3 = require('sqlite3')
+const {AppDAO, DatabaseQuery} = require('database_query')
 
 let mainWindow;
 
-async function createWindow() {
-
+async function createWindow()
+{
   mainWindow = new BrowserWindow({
     width: 800,
-    height: 565,
+    frame:false,
+    height: 515,
     webPreferences: {
     nodeIntegration: false,
     contextIsolation: true,
     enableRemoteModule: false,
     preload: path.join(__dirname, "private/preload.js")
     }
-  });
+  })
 
   mainWindow.setResizable(false)
   mainWindow.setOpacity(0.9)
@@ -25,172 +25,20 @@ async function createWindow() {
 
 app.on("ready", createWindow);
 
-class AppDAO {
-
-    constructor(dbFilePath) {
-      this.db = new sqlite3.Database(dbFilePath, (err) => {
-        if (err) {
-          console.log('Could not connect to database', err)
-        } else {
-          console.log('Connected to database')
-        }
-      })
-    }
-
-    run(sql, params = []) {
-      return new Promise((resolve, reject) => {
-        this.db.run(sql, params, function (err) {
-          if (err) {
-            console.log('Error running sql ' + sql)
-            console.log(err)
-            reject(err)
-          } else {
-            resolve({ id: this.lastID })
-          }
-        })
-      })
-    }
-
-    get(sql, params = []) {
-        return new Promise((resolve, reject) => {
-          this.db.get(sql, params, (err, result) => {
-            if (err) {
-              console.log('Error running sql: ' + sql)
-              console.log(err)
-              reject(err)
-            } else {
-              resolve(result)
-            }
-          })
-        })
-      }
-
-      all(sql, params = []) {
-        return new Promise((resolve, reject) => {
-          this.db.all(sql, params, (err, rows) => {
-            if (err) {
-              console.log('Error running sql: ' + sql)
-              console.log(err)
-              reject(err)
-            } else {
-              resolve(rows)
-            }
-          })
-        })
-      }
-  }
-
-class ProjectRepository {
-  constructor(dao) {
-    this.dao = dao
-  }
-
-  createTableCourses() {
-    const sql = `
-    CREATE TABLE IF NOT EXISTS courses (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT)`
-    return this.dao.run(sql)
-  }
-
-  createTableTasks(){
-    const sql = `
-    CREATE TABLE IF NOT EXISTS tasks (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT,
-      task TEXT,
-      date TEXT,
-      FOREIGN KEY(name) REFERENCES courses(name))`
-    return this.dao.run(sql)
-  }
-
-  deleteCourse(name){
-    const sql = `DELETE FROM courses WHERE name = ?`
-    return this.dao.run(sql, [name])
-  }
-
-  verifyTask(name, task){
-    const sql = `
-    SELECT * FROM tasks WHERE name = ? AND task = ?
-    `
-    return this.dao.all(sql, [name, task])
-  }
-
-  insertTask(name, task, date){
-    const sql = `
-    INSERT INTO tasks (name, task, date) VALUES (?,?,?)`
-    return this.dao.run(sql, [name, task, date])
-  }
-
-  deleteTask(name, task){
-    const sql = `DELETE FROM tasks WHERE name = ? AND task = ?`
-    return this.dao.run(sql, [name, task])
-  }
-
-  dropTableTask(){
-    const sql = `DROP TABLE tasks`
-    return this.dao.run(sql)
-  }
-
-  dropTableCourses(){
-    const sql = `DROP TABLE courses`
-    return this.dao.run(sql)
-  }
-
-  checkTask(name){
-    const sql = `SELECT * FROM tasks WHERE name = ?`
-    return this.dao.all(sql, [name])
-  }
-
-  insertCourse(name) {
-      return this.dao.run(
-        'INSERT INTO courses (name) VALUES (?)',
-        [name])
-         }
-
-  checkCourse(course){
-    const sql = `SELECT * FROM courses WHERE name = ?`
-    return this.dao.all(sql, [course])
-  }
-
-  getAllTasks(){
-   return this.dao.all(`SELECT * FROM tasks`)
-  }
-
-  getAllCourses() {
-    return this.dao.all(`SELECT * FROM courses`)
-  }
-}
-
 let database =  path.join(__dirname, "private/courses.sqlite3")
 const crud = new AppDAO(database)
-const query = new ProjectRepository(crud)
+const query = new DatabaseQuery(crud)
 
+query.createTableCourses()
+query.createTableTasks()
 
-query.dropTableCourses().then(()=>{
-  console.log("course table deleted");
-})
-
-query.dropTableTask().then(()=>{
-  console.log("task table deleted");
-})
-
-query.createTableCourses().then(()=>{
-  console.log("courses table created");
-});
-
-query.createTableTasks().then(()=>{
-  console.log("task table created")
-})
-
-ipcMain.on("openAddcourseMenu", (event, data)=>{
+ipcMain.on("openAddcourseMenu", (event, data)=>
+{
   let addCourseWindow = new BrowserWindow({ parent: mainWindow,
     modal: true,
     show: false,
-    //frame: false,
     width: 500,
     height: 400,
-    icon: '',
     webPreferences: {
     nodeIntegration: false,
     contextIsolation: true,
@@ -210,53 +58,52 @@ ipcMain.on("openAddcourseMenu", (event, data)=>{
   })
 })
 
-ipcMain.on("addcourses", (event, course)=>{
-
-    query.checkCourse(course).then((rows)=>{
+ipcMain.on("addcourses", (event, courseName)=>
+{
+    query.checkCourse(courseName).then((rows)=>
+    {
       if(rows.length == 0){
-        query.insertCourse(course).then(()=>{
-        console.log("course added " + course);
-      }).catch((result)=>{
-        console.log(result)
-      })
-        event.reply("added", `${course} added successfully`, "#76BA1B")
+        query.insertCourse(courseName)
+        event.reply("added", `${courseName} added successfully`, "#76BA1B")
       }
-      else if(rows.length > 0){
-        event.reply("added", `${course} already exists`, "#B32134")
+      else if(rows.length > 0)
+      {
+        event.reply("added", `${courseName} already exists`, "#B32134")
         return
       }
     })
-
 })
 
-ipcMain.on("loadCourses", (event, data)=>{
-  query.getAllCourses().then((rows)=>{
+ipcMain.on("loadCourses", (event, data)=>
+{
+  query.getAllCourses().then((rows)=>
+  {
     if(rows.length == 0)
     {
-      console.log("no data")
       mainWindow.webContents.send("receiveCourses",
       "1785cfc3bc6ac7738e8b38cdccd1af12563c2b9070e07af336a1bf8c0f772b6a");
     }
-    else if(rows.length > 0){
-      rows.forEach((item) => {
+    else if(rows.length > 0)
+    {
+      rows.forEach((item) =>
+      {
         mainWindow.webContents.send("receiveCourses", item.name);
       })
-      console.log(rows)
     }
-
   })
 })
 
-let course;
+let course//keep course public, pass it from parent window to child window
 
-ipcMain.on("openReminder", (event, arg) => {
-  let child = new BrowserWindow({ parent: mainWindow,
+ipcMain.on("openReminder", (event, courseName) =>
+{
+  let setReminder = new BrowserWindow({ parent: mainWindow,
     modal: true,
     show: false,
     width: 500,
     height: 300,
-    icon: '',
-    webPreferences: {
+    webPreferences:
+    {
     devTools: false,
     nodeIntegration: false,
     contextIsolation: true,
@@ -265,65 +112,84 @@ ipcMain.on("openReminder", (event, arg) => {
   }
   })
 
-  child.loadFile(path.join(__dirname, "app/html/set_reminder.html"))
-  child.setMenu(null)
-  child.setOpacity(0.9)
-  child.setHasShadow(false)
-  child.setResizable(false)
-  child.once('ready-to-show', () => {
-    child.show()
+  setReminder.loadFile(path.join(__dirname, "app/html/set_reminder.html"))
+  setReminder.setMenu(null)
+  setReminder.setOpacity(0.9)
+  setReminder.setHasShadow(false)
+  setReminder.setResizable(false)
+  setReminder.once('ready-to-show', () =>
+  {
+    setReminder.show()
   })
-  course = arg;
+  course = courseName;
 })
 
-ipcMain.on("sentCourse", (event, args)=>{
+ipcMain.on("sentCourse", (event, args)=>
+{
   event.reply("chosenCourse", course)
 })
 
-ipcMain.on("data", (event, name, task, date)=>{
-
-  query.verifyTask(name, task).then((rows)=>{
-  if(rows.length == 0){
-    query.insertTask(name, task, date).then(()=>{
+ipcMain.on("data", (event, courseName, task, date)=>
+{
+  query.verifyTask(courseName, task).then((rows)=>
+  {
+  if(rows.length == 0)
+  {
+    query.insertTask(courseName, task, date).then(()=>
+    {
     event.reply("success", "Reminder added successfully", "#76BA1B")
-    console.log("Reminder added")
-    console.log(`${name}  ${task}  ${date}`)
   })
   }
-  else if(rows.length > 0){
-    event.reply("success", `${task} already exsts in<br> ${name}`, "#B32134")
-    console.log("it exits")
+  else if(rows.length > 0)
+  {
+    event.reply("success", `${task} already exsts in<br> ${courseName}`, "#B32134")
   }
   })
 
 })
 
-ipcMain.on("checkReminder", (event, arg)=>{
- query.checkTask(arg).then((rows)=>{
+ipcMain.on("checkReminder", (event, arg)=>
+{
+ query.checkTask(arg).then((rows)=>
+ {
    if(rows.length == 0){
-     mainWindow.webContents.send("courseReminders", "1785cfc3bc6ac7738e8b38cdccd1af12563c2b9070e07af336a1bf8c0f772b6a", "nothing");
+     mainWindow.webContents.send("courseReminders",
+     "1785cfc3bc6ac7738e8b38cdccd1af12563c2b9070e07af336a1bf8c0f772b6a",
+      "nothing")
    }
 
-   else if(rows.length > 0){
-     rows.forEach((item) => {
+   else if(rows.length > 0)
+   {
+     rows.forEach((item) =>
+     {
        mainWindow.webContents.send("courseReminders", item.task, item.date);
-       console.log(rows)
-     });
+     })
    }
 
  })
 })
 
-ipcMain.on("remove_reminder", (event, name, task)=>{
-
-  if(task == null){
+ipcMain.on("remove_reminder", (event, courseName, task)=>
+{
+  if(task == null)
+  {
     return
   }
   else{
-    query.deleteTask(name, task).then(()=>{
-    event.reply("removed", `${task} successfully removed from ${name}`)
-    console.log(`${task} successfully removed from ${name}`)
+    query.deleteTask(courseName, task).then(()=>
+    {
+    event.reply("removed", `${task} successfully removed from ${courseName}`)
   })
-}
+ }
+})
 
+ipcMain.on("close", ()=>
+{
+  mainWindow.destroy()
+})
+
+ipcMain.on("deleteCourse", (event, course)=>{
+  query.deleteCourseTasks(course).then(()=>{
+    query.deleteCourse(course)
+  })
 })
