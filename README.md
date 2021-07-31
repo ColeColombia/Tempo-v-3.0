@@ -1,3 +1,3 @@
 # Tempo-v-3.0
 
-Experimental Node js student course and assignment prototype
+Experimental javascript student course management system prototype
