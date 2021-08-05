@@ -1,21 +1,21 @@
 {
-  "name": "tempo-v-3.0",
-  "version": "3.0.0",
-  "description": "application for creating course shedules",
+  "name": "tempo",
+  "version": "1.0.0",
+  "description": "",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
   },
   "keywords": [
-    "tempo"
+    "Time",
+    "scheduler"
   ],
-  "author": "Kholani Benelzane",
+  "author": "Cole",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^13.1.7"
+    "electron-wix-msi": "^3.2.0"
   },
   "dependencies": {
-    "bluebird": "^3.7.2",
-    "sqlite3": "^5.0.2"
+    "electron": "^13.1.8"
   }
 }

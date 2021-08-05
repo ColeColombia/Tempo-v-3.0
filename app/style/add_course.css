@@ -10,67 +10,65 @@ body{
   font-family: roboto;
 }
 
-.form_header{
+.addCourseName{
   text-align: center;
 }
 
-.course_name, .date_picker{
-  display: block;
-  margin: 1%;
-  border: none;
-  border-radius: 2px;
-  font-size: 11pt;
+.container{
+  width: 100%;
 }
 
-.course_name{
-  height: 30px;
-  width: 96%;
+.form{
+  margin: auto;
+  width: 80%;
+  padding: 10px;
+  margin-top: 10%;
+}
+
+.field, .submit{
+  padding: 10px;
+  border: none;
+  background-color: #E4E6EB;
+  color: #18191A;
+  font-family: sans-serif;
+  font-size: 12pt;
+  margin: 1.4%;
+}
+
+.field{
+  width: 75%;
+  height: 20px;
+  border: none;
   color: white;
   background-color: #18191A;
+  border-radius: 1px;
+  font-size: 12pt;
 }
 
-.date_picker{
-  width: 96.8%;
-  height: 30px;
-  background-color: #18191A;
-  color: silver;
-}
-
-.time{
-  margin-left: 1%;
-  text-align: center;
-}
-
-.time input{
-  display: inline-block;
-  width: 30.8%;
-  border: none;
+.submit{
+  width: 80%;
+  height: 40px;
+  cursor: pointer;
   border-radius: 2px;
-  height: 33px;
-  font-size: 11pt;
-  background-color: #18191A;
-  color: white;
-}
-
-.time, .setReminderButton{
-  margin: 1.5%;
-  display: block;
-}
-
-.setReminderButton{
-  border: none;
-  border-radius: 2px;
-  width: 97.4%;
-  height: 32px;
-  font-size: 11pt;
   cursor: pointer;
   background-color: #4ADEDE;
   color: #FFFEF7;
 }
 
-.form_container{
-  margin: auto;
-  width: 75%;
+.submit:hover{
+  background-color: #03FDFC;
+}
+
+.submit:active{
+  background-color: #58CCED;
+}
+
+.valid{
+  text-align: center;
+}
+
+.verify{
+  font-weight: bold;
 }
 
 .modal {
@@ -82,7 +80,7 @@ body{
   margin-left: 12%;
   margin-top: 12%;
   width: 75%;
-  height: 65%;
+  height: 50%;
   overflow: hidden;
   background-color: #171717;
   border-radius: 2px;
@@ -112,10 +110,5 @@ body{
 
 .response{
   margin-left: 2%;
-  font-weight: bold;
-}
-
-.valid{
-  text-align: center;
   font-weight: bold;
 }

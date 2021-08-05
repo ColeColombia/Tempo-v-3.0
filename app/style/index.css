@@ -1,8 +1,109 @@
+@font-face {
+  src: url(Roboto-Thin.ttf);
+  font-family: roboto;
+}
+
 body{
   margin: 0 auto;
-  background-image: url("../images/eagle.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-color: #242526;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  font-family: 'Roboto', sans-serif;
+  font-family: roboto;
+}
+
+.no-js #loader { display: none;  }
+.js #loader { display: block; position: absolute; left: 100px; top: 0; }
+.se-pre-con {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url("../images/Rocket.gif") center no-repeat #fff;
+}
+
+.due_task{
+  height: 0%;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  background-color: #111;
+  overflow-y: hidden;
+  transition: 0.7s;
+}
+
+.due_header{
+  color: silver;
+  margin-left: 2%;
+  overflow-y: hidden;
+}
+
+.due_task_header{
+  color: silver;
+  text-align: center;
+}
+
+.heading_raper{
+    color: silver;
+    width: 99%;
+    margin:0 auto;
+    margin-left: 1px;
+  }
+
+  .taskName, .taskDate, .timeRemaining{
+    display: inline-block;
+    height: 30px;
+    width: 32%;
+    text-align: center;
+    padding-top: 8px;
+    cursor: pointer;
+    border: none;
+    border-radius: 2px;
+    color: #FFFEF7;
+    font-size: 14pt;
+    margin: 0.3%;
+    color: silver;
+  }
+
+  .courseContent{
+    width: 99%;
+    margin:0 auto;
+    margin-left: 1%;
+    overflow-y: scroll;
+    height: 300px;
+  }
+
+  .courseContent::-webkit-scrollbar {
+    display: none;
+  }
+
+  .closeDue {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+
+.minimize{
+  margin-left:92%;
+  width: 5%;
+  cursor: pointer;
+  overflow-y: hidden;
+}
+
+.closeParent{
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 45px;
+  float: right;
+  text-decoration: none;
+  color: black;
+  font-weight: bolder;
 }
 
 #nav-bar
@@ -10,9 +111,11 @@ body{
   width: 100%;
   height: 30%;
   text-align: center;
+  margin-top: 175px;
+  overflow-y: hidden;
 }
 
-#view, #milestone
+#view, .milestone
 {
 width: 49.5%;
 height: 40px;
@@ -25,19 +128,19 @@ font-size: 12pt;
 text-align: center;
 }
 
-#view:hover, #milestone:hover{
+#view:hover, .milestone:hover{
   background-color: grey;
 }
 
 #Tempo{
     text-align: center;
-    margin-top: 25%;
+    margin-top: 18%;
 }
 
 #time{
   color: white;
   font-family: monospace;
-  font-size: 40pt;
+  font-size: 45pt;
   font-weight: bold;
 }
 
@@ -48,24 +151,21 @@ text-align: center;
   font-weight: bold;
 }
 
-/*
-Edit later
-*/
-/* The side navigation menu */
+
 .sidenav {
-  height: 100%; /* 100% Full-height */
-  width: 0; /* 0 width - change this with JavaScript */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
   left: 0;
-  background-color: #111; /* Black*/
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 60px; /* Place content 60px from the top */
-  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 60px;
+  transition: 0.5s;
+  overflow-y: hidden;
 }
 
-/* The navigation menu links */
 .sidenav a {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
@@ -73,14 +173,13 @@ Edit later
   color: #818181;
   display: block;
   transition: 0.3s;
+  font-weight: bolder;
 }
 
-/* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
   color: #f1f1f1;
 }
 
-/* Position and style the close button (top right corner) */
 .sidenav .closebtn {
   position: absolute;
   top: 0;
@@ -89,88 +188,22 @@ Edit later
   margin-left: 50px;
 }
 
-.addCourseName{
-  height: 100%; /* 100% Full-height */
-  width: 0; /* 0 width - change this with JavaScript */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
-  left: 0;
-  background-color: #111; /* Black*/
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 60px; /* Place content 60px from the top */
-  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
-}
-
-.addCourseName .closeLayer{
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 58px;
-  margin-left: 50px;
-  text-decoration: none;
-  color: #818181;
-}
-
-.addCourseName a:hover{
-  color: #f1f1f1;
-}
-
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {
-  transition: margin-left .5s;
-  padding: 20px;
-}
-
-#container{
-  width: 100%;
-}
-
-#form{
-  margin: auto;
-  width: 30%;
-  padding: 10px;
-  margin-top: 20%;
-}
-
-#field, #submit{
-  padding: 10px;
-  border: none;
-  background-color: #E4E6EB;
-  color: #18191A;
-  font-family: sans-serif;
-  font-size: 12pt;
-  margin: 1.4%;
-}
-
-#field{
-  width: 100%;
-  height: 20px;
-  border: 1px solid white;
-  border-left: none;
-  border-right: none;
-  border-top: none;
-  color: white;
-  background-color: #18191A;
-}
-
-#submit{
-  width: 108%;
-  height: 40px;
-  cursor: pointer;
+  transition: margin-left .7s;
 }
 
 .theCourseList{
-  height: 100%; /* 100% Full-height */
-  width: 0; /* 0 width - change this with JavaScript */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
   left: 0;
-  background-color: #111; /* Black*/
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 60px; /* Place content 60px from the top */
-  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  background-color: #111;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  padding-top: 60px;
+  transition: 0.5s;
   color: silver;
 }
 
@@ -186,7 +219,7 @@ Edit later
 
 .course_select{
   margin: 1%;
-  height: 11vh;
+  height: 10vh;
   text-align: center;
   padding-top: 4px;
   background-color: #18191A;
@@ -200,7 +233,7 @@ Edit later
 
 .chosen_course{
   margin: 1%;
-  height: 11vh;
+  height: 10vh;
   text-align: center;
   padding-top: 4px;
   background-color: #18191A;
@@ -208,26 +241,39 @@ Edit later
   text-decoration: none;
   width: 98%;
   border: none;
-  font-size: 14pt;
+  font-size: 12pt;
   color: silver;
   cursor: pointer;
 }
 
 .course-details{
-  height: 100%; /* 100% Full-height */
-  width: 0; /* 0 width - change this with JavaScript */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
+  height: 100%;
+  width: 0%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
   left: 0;
-  background-color: #111; /* Black*/
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 60px; /* Place content 60px from the top */
-  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  background-color: #111;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  padding-top: 60px;
+  transition: 0.8s;
   color:silver;
 }
 
-.course-details .close_details{
+.refresh, .close_details{
+  display: inline;
+}
+
+.refresh{
+  position: absolute;
+  top: 0;
+  left: 15px;
+  font-size: 58px;
+  text-decoration: none;
+}
+
+ .close_details{
   position: absolute;
   top: 0;
   right: 25px;
@@ -237,13 +283,27 @@ Edit later
   color: #818181;
 }
 
-.setButton, .deleteButton{
-display: block;
-margin: 0.5%;
+.setCourseName, .task_head, .no-task{
+  margin-left: 2%;
+}
+
+.reminderButtons{
+  margin-left: 2%;
+}
+
+.reminderButtons img{
+  float: left;
+}
+
+.setButton, .remove_course, .deleteButton {
+ display: inline;
+}
+
+.remove_course{
+  margin-left: 38%;
 }
 
 .set_reminder{
-  margin-left: 78.5%;
   width: 20%;
   height: 30px;
   font-size: 11pt;
@@ -252,6 +312,7 @@ margin: 0.5%;
   border: none;
   border-radius: 2px;
   color: #FFFEF7;
+  padding-top:7px;
 }
 
 .set_reminder:hover{
@@ -263,7 +324,6 @@ margin: 0.5%;
 }
 
 .delete_reminder{
-  margin-left: 78.5%;
   width: 20%;
   height: 30px;
   font-size: 11pt;
@@ -272,19 +332,32 @@ margin: 0.5%;
   border: none;
   border-radius: 2px;
   color: #FFFEF7;
+  padding-top:7px;
 }
 
 .delete_reminder:hover{
   background-color: #B32134;
 }
 
+.select_remove{
+  width: 20%;
+  height: 30px;
+  font-size: 11pt;
+  cursor: pointer;
+  background-color:#4ADEDE;
+  border: none;
+  border-radius: 2px;
+  color: #FFFEF7;
+}
+
 .course_tasks{
-  margin-top: 2%;
+  margin-top: 0.5%;
 }
 
 .heading_wraper{
   width: 99%;
   margin:0 auto;
+  margin-left: 1%;
 }
 
 .task-name, .task-date, .time-remaining{
@@ -305,6 +378,13 @@ margin: 0.5%;
 .course-content{
   width: 99%;
   margin:0 auto;
+  margin-left: 1%;
+  height: 220px;
+  overflow-y: scroll;
+}
+
+.course-content::-webkit-scrollbar {
+  display: none;
 }
 
 .wrap_reminder div{
@@ -338,10 +418,179 @@ margin: 0.5%;
   width: 32%;
 }
 
-.setCourseName, .task_head, .no-task{
-  margin-left: 2%;
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  margin-left: 28%;
+  margin-top: 20%;
+  width: 45%;
+  height: 40%;
+  overflow: hidden;
+  background-color: #171717;
+  transition: 0.5s;
+  border-radius: 2px;
 }
 
-.course_header img{
-  float: left;
+.close, .content{
+  display: inline-block;
+}
+
+.close{
+  font-size: 30pt;
+  float: right;
+  margin-right: 3%;
+  color: silver;
+}
+
+.close:hover{
+  cursor: pointer;
+  color: white;
+}
+
+.content{
+  overflow:hidden;
+  margin-top: 2%;
+  text-align: center;
+  width: 100%;
+  color: #76BA1B;
+}
+
+.response{
+  margin-left: 2%;
+  font-weight: bold;
+}
+
+.removecourse{
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 60px;
+  transition: 0.5s;
+}
+
+.removecourse h1{
+  color: silver;
+}
+
+.close_course{
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36pt;
+  margin-left: 50px;
+  text-decoration: none;
+  color: silver
+}
+
+.close_course:hover{
+  color: white;
+}
+
+.selected_Course{
+  width: 100%;
+  height: 45px;
+  font-size: 11pt;
+  cursor: pointer;
+  background-color:#18191A;
+  border: none;
+  color: #FFFEF7;
+  border: none;
+}
+
+.removed_Course{
+  width: 100%;
+  height: 45px;
+  font-size: 11pt;
+  cursor: pointer;
+  background-color:#18191A;
+  border: none;
+  color: #FFFEF7;
+  font-size: 12pt;
+}
+
+.rem_course{
+  margin-top: 15%;
+}
+
+.removed_Course{
+  margin-top: 2%;
+}
+
+.removedModal{
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  margin-left: 30%;
+  margin-top: 20%;
+  width: 40%;
+  height: 35%;
+  overflow: hidden;
+  background-color: #171717;
+  transition: 0.5s;
+  border-radius: 2px;
+}
+
+.courseRemoved{
+  font-size: 30pt;
+  float: right;
+  margin-right: 3%;
+  color: silver;
+}
+
+.courseRemoved:hover{
+  cursor: pointer;
+  color: white;
+}
+
+.isRemoved{
+  overflow:hidden;
+  margin-top: 2%;
+  text-align: center;
+  width: 100%;
+  color: #76BA1B;
+}
+
+.data-feedback{
+  margin-left: 2%;
+  font-weight: bold;
+}
+
+
+.openingWindow{
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  margin-left: 30%;
+  margin-top: 20%;
+  width: 40%;
+  height: 20%;
+  overflow: hidden;
+  background-color: #171717;
+  transition: 0.5s;
+  border-radius: 2px;
+}
+
+.opening{
+  color:silver;
+  font-size: 14pt;
+  text-align: center;
+}
+
+.text{
+  color:silver;
+  font-size: 14pt;
+  text-align: center;
+  display: none;
 }
