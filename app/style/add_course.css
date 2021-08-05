@@ -1,7 +1,13 @@
+@font-face {
+  src: url(Roboto-Thin.ttf);
+  font-family: roboto;
+}
+
 body{
   margin: 0 auto;
   background-color: #111;
   color: silver;
+  font-family: roboto;
 }
 
 .addCourseName{
@@ -32,7 +38,7 @@ body{
 .field{
   width: 75%;
   height: 20px;
-  border: 1px solid silver;
+  border: none;
   color: white;
   background-color: #18191A;
   border-radius: 1px;
@@ -74,9 +80,10 @@ body{
   margin-left: 12%;
   margin-top: 12%;
   width: 75%;
-  height: 65%;
+  height: 50%;
   overflow: hidden;
   background-color: #171717;
+  border-radius: 2px;
 }
 
 .close, .content{

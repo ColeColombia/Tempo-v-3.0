@@ -1,8 +1,98 @@
+@font-face {
+  src: url(Roboto-Thin.ttf);
+  font-family: roboto;
+}
+
 body{
   margin: 0 auto;
-  background-image: url("../images/eagle.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-color: #242526;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  font-family: 'Roboto', sans-serif;
+  font-family: roboto;
+}
+
+.no-js #loader { display: none;  }
+.js #loader { display: block; position: absolute; left: 100px; top: 0; }
+.se-pre-con {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url("../images/Rocket.gif") center no-repeat #fff;
+}
+
+.due_task{
+  height: 0%;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  background-color: #111;
+  overflow-y: hidden;
+  transition: 0.7s;
+}
+
+.due_header{
+  color: silver;
+  margin-left: 2%;
+  overflow-y: hidden;
+}
+
+.due_task_header{
+  color: silver;
+  text-align: center;
+}
+
+.heading_raper{
+    color: silver;
+    width: 99%;
+    margin:0 auto;
+    margin-left: 1px;
+  }
+
+  .taskName, .taskDate, .timeRemaining{
+    display: inline-block;
+    height: 30px;
+    width: 32%;
+    text-align: center;
+    padding-top: 8px;
+    cursor: pointer;
+    border: none;
+    border-radius: 2px;
+    color: #FFFEF7;
+    font-size: 14pt;
+    margin: 0.3%;
+    color: silver;
+  }
+
+  .courseContent{
+    width: 99%;
+    margin:0 auto;
+    margin-left: 1%;
+    overflow-y: scroll;
+    height: 300px;
+  }
+
+  .courseContent::-webkit-scrollbar {
+    display: none;
+  }
+
+  .closeDue {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+
+.minimize{
+  margin-left:92%;
+  width: 5%;
+  cursor: pointer;
+  overflow-y: hidden;
 }
 
 .closeParent{
@@ -21,10 +111,11 @@ body{
   width: 100%;
   height: 30%;
   text-align: center;
-  margin-top: 222px;
+  margin-top: 175px;
+  overflow-y: hidden;
 }
 
-#view, #milestone
+#view, .milestone
 {
 width: 49.5%;
 height: 40px;
@@ -37,7 +128,7 @@ font-size: 12pt;
 text-align: center;
 }
 
-#view:hover, #milestone:hover{
+#view:hover, .milestone:hover{
   background-color: grey;
 }
 
@@ -49,7 +140,7 @@ text-align: center;
 #time{
   color: white;
   font-family: monospace;
-  font-size: 40pt;
+  font-size: 45pt;
   font-weight: bold;
 }
 
@@ -72,6 +163,7 @@ text-align: center;
   overflow-x: hidden;
   padding-top: 60px;
   transition: 0.5s;
+  overflow-y: hidden;
 }
 
 .sidenav a {
@@ -109,6 +201,7 @@ text-align: center;
   left: 0;
   background-color: #111;
   overflow-x: hidden;
+  overflow-y: hidden;
   padding-top: 60px;
   transition: 0.5s;
   color: silver;
@@ -134,7 +227,7 @@ text-align: center;
   text-decoration: none;
   width: 98%;
   border: none;
-  font-size: 10pt;
+  font-size: 12pt;
   color: silver;
 }
 
@@ -155,19 +248,32 @@ text-align: center;
 
 .course-details{
   height: 100%;
-  width: 0;
+  width: 0%;
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
   background-color: #111;
   overflow-x: hidden;
+  overflow-y: hidden;
   padding-top: 60px;
   transition: 0.8s;
   color:silver;
 }
 
-.course-details .close_details{
+.refresh, .close_details{
+  display: inline;
+}
+
+.refresh{
+  position: absolute;
+  top: 0;
+  left: 15px;
+  font-size: 58px;
+  text-decoration: none;
+}
+
+ .close_details{
   position: absolute;
   top: 0;
   right: 25px;
@@ -251,6 +357,7 @@ text-align: center;
 .heading_wraper{
   width: 99%;
   margin:0 auto;
+  margin-left: 1%;
 }
 
 .task-name, .task-date, .time-remaining{
@@ -271,6 +378,13 @@ text-align: center;
 .course-content{
   width: 99%;
   margin:0 auto;
+  margin-left: 1%;
+  height: 220px;
+  overflow-y: scroll;
+}
+
+.course-content::-webkit-scrollbar {
+  display: none;
 }
 
 .wrap_reminder div{
@@ -310,13 +424,14 @@ text-align: center;
   z-index: 1;
   left: 0;
   top: 0;
-  margin-left: 35%;
+  margin-left: 28%;
   margin-top: 20%;
-  width: 30%;
-  height: 30%;
+  width: 45%;
+  height: 40%;
   overflow: hidden;
   background-color: #171717;
   transition: 0.5s;
+  border-radius: 2px;
 }
 
 .close, .content{
@@ -361,6 +476,10 @@ text-align: center;
   transition: 0.5s;
 }
 
+.removecourse h1{
+  color: silver;
+}
+
 .close_course{
   position: absolute;
   top: 0;
@@ -403,4 +522,75 @@ text-align: center;
 
 .removed_Course{
   margin-top: 2%;
+}
+
+.removedModal{
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  margin-left: 30%;
+  margin-top: 20%;
+  width: 40%;
+  height: 35%;
+  overflow: hidden;
+  background-color: #171717;
+  transition: 0.5s;
+  border-radius: 2px;
+}
+
+.courseRemoved{
+  font-size: 30pt;
+  float: right;
+  margin-right: 3%;
+  color: silver;
+}
+
+.courseRemoved:hover{
+  cursor: pointer;
+  color: white;
+}
+
+.isRemoved{
+  overflow:hidden;
+  margin-top: 2%;
+  text-align: center;
+  width: 100%;
+  color: #76BA1B;
+}
+
+.data-feedback{
+  margin-left: 2%;
+  font-weight: bold;
+}
+
+
+.openingWindow{
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  margin-left: 30%;
+  margin-top: 20%;
+  width: 40%;
+  height: 20%;
+  overflow: hidden;
+  background-color: #171717;
+  transition: 0.5s;
+  border-radius: 2px;
+}
+
+.opening{
+  color:silver;
+  font-size: 14pt;
+  text-align: center;
+}
+
+.text{
+  color:silver;
+  font-size: 14pt;
+  text-align: center;
+  display: none;
 }

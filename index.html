@@ -3,15 +3,35 @@
   <head>
     <meta charset="utf-8">
     <title>Tempo</title>
+    <link rel="stylesheet" href="app/style/fonts.css">
     <link rel="stylesheet" href="app/style/index.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Roboto:wght@100&display=swap"
-     rel="stylesheet">
-    <script
-    src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-    crossorigin="anonymous"></script>
+    <script src="app/javascript/jquery-3.6.0.js" type="text/javascript"></script>
   </head>
-  <body style="font-family: 'Roboto', sans-serif;">
+  <body>
+    <div class="se-pre-con"></div>
+
+    <div class="minimize">
+      <img src="app\images\minimize_white_36dp.svg">
+    </div>
+
+    <div class="due_task">
+      <a href="javascript:void(0)" class="closeDue">
+        <img src="app\images\north_white_36dp.svg"></a>
+      <div class="due_header">
+        <h1>Due tasks</h1>
+      </div>
+      <div class="due_task_header">
+        <h3>tasks</h3>
+      </div>
+      <div class="heading_raper">
+      <div class="taskName">course</div>
+      <div class="taskDate">Task name</div>
+      <div class="timeRemaining">Due date</div>
+    </div>
+    <div class="courseContent">
+    </div>
+    </div>
+
     <div id="main">
       <div id="Tempo">
       <div id="time"></div>
@@ -20,12 +40,13 @@
     </div>
     <div id="nav-bar">
     <button id="view">Menu</button>
-    <button id="milestone">Due tasks</button>
+    <button class="milestone">Due tasks</button>
     </div>
   </div>
 
 <div id="mySidenav" class="sidenav">
-  <a href="javascript:void(0)" class="closebtn">&times;</a>
+  <a href="javascript:void(0)" class="closebtn">
+    <img src="app\images\arrow_back_white_24dp.svg"></a>
   <a href="#" class="addcourse">Add course</a>
   <a href="#" id="showCourses">Courses</a>
   <a href="#" class="close-RemoveCourse">Remove course</a>
@@ -33,7 +54,7 @@
 </div>
 
 <div id="courseList" class="theCourseList">
-  <a href="javascript:void(0)" class="closeCourseList">&times;</a>
+  <a href="javascript:void(0)" class="closeCourseList"><img src="app\images\arrow_back_white_24dp.svg"></a>
   <div class="listCourses">
     <h1>Courses</h1>
     <div id="course_menu" class="course-menu">
@@ -46,12 +67,13 @@
 </div>
 
 <div id="course_details" class="course-details">
-  <a href="javascript:void(0)" class="close_details">&times;</a>
+  <a class="refresh" href="javascript:void(0)"><img src="app\images\refresh_white_24dp.svg"></a>
+  <a href="javascript:void(0)" class="close_details"><img src="app\images\arrow_back_white_24dp.svg"></a>
   <h1 class="setCourseName">Course name</h1>
   <div class="course_info">
       <div class="reminderButtons">
         <div class="setButton"><button class="set_reminder">
-          <img src="app/images/event_white_24dp.svg">set reminder</button></div>
+          <img src="app/images/event_white_24dp.svg">add task</button></div>
           <div class="remove_course">
             <select class="select_remove">
             </select>
@@ -68,8 +90,10 @@
       <div class="task-date">Due date</div>
       <div class="time-remaining">Time remaining</div>
     </div>
+    <div class="task_container">
     <div id="course_content" class="course-content">
     </div>
+  </div>
     </div>
   </div>
 </div>
@@ -83,13 +107,32 @@
 </div>
 
 <div class="removecourse">
-  <a href="javascript:void(0)" class="close_course">&times;</a>
+  <a href="javascript:void(0)" class="close_course"><img src="app\images\arrow_back_white_24dp.svg"></a>
+  <h1>Remove course</h1>
    <div class="rem_course">
      <select class="selected_Course">
      </select>
      <button class="removed_Course">Remove course</button>
    </div>
 </div>
+
+<div class="removedModal">
+  <span class="courseRemoved">&times;</span>
+  <div class="isRemoved">
+      <div class="confirmation_data">
+      </div>
+  </div>
+</div>
+
+<div class="openingWindow">
+  <div class="opening">
+     <h3>Loading...</h3>
+  </div>
+  <div class="text">
+    <h4>Opening feature</h4>
+  </div>
+</div>
+
 </body>
 <script src="app/javascript/index.js"></script>
 </html>

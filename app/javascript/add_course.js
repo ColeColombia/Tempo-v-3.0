@@ -1,6 +1,5 @@
 $(document).ready(function(){
 
-
 function validate(courseName){
 
   if(courseName.length == 0){
@@ -16,8 +15,8 @@ function validate(courseName){
     return false
   }
 
-  else if(courseName.length > 45){
-    $(".valid").html(`<p class="verify">Enter a maximum of 45 characters</p>`)
+  else if(courseName.length > 26){
+    $(".valid").html(`<p class="verify">Enter a maximum of 26 characters</p>`)
     $(".valid").css("color", "#B32134")
     return false
   }

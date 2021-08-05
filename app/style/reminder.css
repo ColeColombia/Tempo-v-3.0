@@ -1,7 +1,13 @@
+@font-face {
+  src: url(Roboto-Thin.ttf);
+  font-family: roboto;
+}
+
 body{
   margin: 0 auto;
   background-color: #111;
   color: silver;
+  font-family: roboto;
 }
 
 .form_header{
@@ -79,6 +85,7 @@ body{
   height: 65%;
   overflow: hidden;
   background-color: #171717;
+  border-radius: 2px;
 }
 
 .close, .content{

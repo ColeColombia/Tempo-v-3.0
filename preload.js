@@ -145,7 +145,7 @@ contextBridge.exposeInMainWorld(
         }
     },
     minimizeWin:(channel) => {
-        let validChannel = ["minimize"]
+        let validChannel = ["minimizeWin"]
         if (validChannel.includes(channel)) {
             ipcRenderer.send(channel)
         }
@@ -160,5 +160,35 @@ contextBridge.exposeInMainWorld(
           if (validChannel.includes(channel)) {
               ipcRenderer.send(channel, course)
           }
+        },
+          receive:(channel, func) => {
+              let validChannel = ["courseIsRemoved"]
+              if (validChannel.includes(channel)) {
+                  ipcRenderer.on(channel, (event, ...args) => func(...args))
+              }
+          },
+          remove: (channel)=>{
+              ipcRenderer.removeAllListeners("courseIsRemoved")
+            }
+      })
+
+    contextBridge.exposeInMainWorld(
+      "loadAll",
+      {
+        fecthAll:(channel) => {
+            let validChannel = ["fetch"]
+            if (validChannel.includes(channel)) {
+                ipcRenderer.send(channel)
+            }
+        },
+        fetchTasks:(channel, func) => {
+            let validChannel = ["all_tasks"]
+            if (validChannel.includes(channel)) {
+                ipcRenderer.on(channel, (event, ...args) => func(...args))
+            }
+        },
+        remove: (channel)=>{
+            ipcRenderer.removeAllListeners("all_tasks")
+          }
       }
-    })
+    )
